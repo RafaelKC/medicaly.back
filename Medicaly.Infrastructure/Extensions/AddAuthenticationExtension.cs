@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using Medicaly.Infrastructure.Authentication;
+using Medicaly.Infrastructure.Authentication.Users;
 using Medicaly.Infrastructure.Consts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -12,6 +13,7 @@ public static class AddAuthenticationExtension
     {
         services
             .AddScoped<IAuthenticationService, AuthenticationService>()
+            .AddScoped<IUserProvider, UserProvider>()
             .AddAuthentication(options =>
                 {
                     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

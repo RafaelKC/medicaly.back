@@ -2,12 +2,13 @@
 using Medicaly.Infrastructure.Supabse;
 using Supabase.Gotrue;
 using Supabase.Gotrue.Exceptions;
+using User = Medicaly.Domain.Users.User;
 
 namespace Medicaly.Infrastructure.Authentication;
 
 public interface IAuthenticationService
 {
-    Task<Guid?> RegisterAsync(string email, string password, Guid userEntityId);
+    Task<Guid?> RegisterAsync(string email, string password, User input);
     Task<LoginOutput> Login(LoginInput input);
     Task Logout();
 }
@@ -22,20 +23,15 @@ public class AuthenticationService: IAuthenticationService
     }
 
 
-    public async Task<Guid?> RegisterAsync(string email, string password, Guid userEntityId)
+    public async Task<Guid?> RegisterAsync(string email, string password, User input)
     {
-        var userData = new UserCredentialData
-        {
-            UserEntityId = userEntityId
-        };
-
         try
         {
             var session = await _supabseClient.Auth.SignUp(email, password, new SignUpOptions
             {
                 Data = new Dictionary<string, object>
                 {
-                    { "user", userData },
+                    { "user", input },
                 }
             });
             
