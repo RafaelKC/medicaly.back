@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Medicaly.Domain.Communs;
+using Medicaly.Domain.Users;
 using Medicaly.Domain.Users.Enums;
 
 namespace Medicaly.Domain.Administradores.Dtos;
 
-public class AdministradorInput: EntityDto
+public class AdministradorInput: EntityDto, IUser
 {
     [Required]
     public string Nome { get; set; }
@@ -23,7 +24,7 @@ public class AdministradorInput: EntityDto
     [MinLength(10)]
     public string Telefone { get; set; }
 
-    public DateOnly DataNascimento { get; set; }
+    public DateTime DataNascimento { get; set; }
 
     public Guid? EnderecoId { get; set; }
 

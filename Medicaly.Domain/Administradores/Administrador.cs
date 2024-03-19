@@ -25,7 +25,7 @@ public class Administrador: Entity, IUser
     [MinLength(10)]
     public string Telefone { get; set; }
 
-    public DateOnly DataNascimento { get; set; }
+    public DateTime DataNascimento { get; set; }
 
     [Required]
     public Genero Genero { get; set; }

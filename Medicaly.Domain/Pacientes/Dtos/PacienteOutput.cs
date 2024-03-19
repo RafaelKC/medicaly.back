@@ -1,18 +1,19 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Medicaly.Domain.Administradores;
 using Medicaly.Domain.Communs;
+using Medicaly.Domain.Users;
 using Medicaly.Domain.Users.Enums;
 
 namespace Medicaly.Domain.Pacientes.Dtos;
 
-public class PacienteOutput: EntityDto
+public class PacienteOutput: EntityDto, IUser
 {
     public string Nome { get; set; }
     public string Sobrenome { get; set; }
     public string Cpf { get; set; }
     public string Email { get; set; }
     public string Telefone { get; set; }
-    public DateOnly DataNascimento { get; set; }
+    public DateTime DataNascimento { get; set; }
     public Guid? EnderecoId { get; set; }
     public Genero Genero { get; set; }
     

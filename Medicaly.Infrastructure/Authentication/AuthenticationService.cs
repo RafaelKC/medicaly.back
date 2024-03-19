@@ -8,7 +8,7 @@ namespace Medicaly.Infrastructure.Authentication;
 
 public interface IAuthenticationService
 {
-    Task<Guid?> RegisterAsync(string email, string password, User input);
+    Task<SingInOutput> RegisterAsync(string email, string password, User input);
     Task<LoginOutput> Login(LoginInput input);
     Task Logout();
 }
@@ -23,7 +23,7 @@ public class AuthenticationService: IAuthenticationService
     }
 
 
-    public async Task<Guid?> RegisterAsync(string email, string password, User input)
+    public async Task<SingInOutput> RegisterAsync(string email, string password, User input)
     {
         try
         {
@@ -34,12 +34,21 @@ public class AuthenticationService: IAuthenticationService
                     { "user", input },
                 }
             });
-            
-            return session?.User is not null ? Guid.Parse(session.User.Id) : null;
+
+            return new SingInOutput
+            {
+                Success = session.User is not null,
+                Token = session.AccessToken,
+                RefreshToken = session.RefreshToken,
+                UserId = (session.User?.UserMetadata["user"] as User)?.Id
+            };
         }
         catch (GotrueException e)
         {
-            return null;
+            return new SingInOutput
+            {
+                Success = false
+            };
         }
     }
 
@@ -67,8 +76,6 @@ public class AuthenticationService: IAuthenticationService
 
     public async Task Logout()
     {
-        var token = _supabseClient.Auth.CurrentSession?.AccessToken;
-        var refresh = _supabseClient.Auth.CurrentSession?.RefreshToken;
         await _supabseClient.Auth.SignOut();
     }
 }

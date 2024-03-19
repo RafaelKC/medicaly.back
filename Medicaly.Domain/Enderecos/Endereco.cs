@@ -10,6 +10,10 @@ public class Endereco: Entity
     [MinLength(8)]
     public string Cep { get; set; }
 
+    [MaxLength(2)]
+    [MinLength(2)]
+    public string Estado { get; set; }
+
     [Required]
     public string Logradouro { get; set; }
 
@@ -37,7 +41,7 @@ public class Endereco: Entity
 
     public Endereco(EnderecoInput input)
     {
-        Id = input.Id;
+        Id = input.Id != Guid.Empty ? input.Id : Guid.NewGuid();
         Cep = input.Cep;
         Logradouro = input.Logradouro;
         Numero = input.Numero;
@@ -46,6 +50,21 @@ public class Endereco: Entity
         CodigoIbgeCidade = input.CodigoIbgeCidade;
         Complemento = input.Complemento;
         Observacao = input.Observacao;
+        Estado = input.Estado;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        var endereco = obj as Endereco;
+
+        var temValor = obj != null && endereco != null;
+        if (!temValor) return false;
+
+        return endereco?.Cep == Cep
+               && endereco?.Logradouro == Logradouro
+               && endereco?.Numero == Numero
+               && endereco?.CodigoIbgeCidade == CodigoIbgeCidade
+               && endereco?.Estado == Estado;
     }
 
     public void Update(EnderecoInput input)

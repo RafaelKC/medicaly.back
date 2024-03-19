@@ -13,6 +13,7 @@ public class EnderecoOutput : EntityDto
     public string CodigoIbgeCidade { get; set; }
     public string Complemento { get; set; }
     public string Observacao { get; set; }
+    public string Estado { get; set; }
 
     public EnderecoOutput(Endereco input)
     {
@@ -25,5 +26,6 @@ public class EnderecoOutput : EntityDto
         CodigoIbgeCidade = input.CodigoIbgeCidade;
         Complemento = input.Complemento;
         Observacao = input.Observacao;
+        Estado = input.Estado;
     }
 }

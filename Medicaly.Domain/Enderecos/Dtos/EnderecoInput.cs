@@ -9,6 +9,10 @@ public class EnderecoInput: EntityDto
     [MinLength(8)]
     public string Cep { get; set; }
 
+    [MaxLength(2)]
+    [MinLength(2)]
+    public string Estado { get; set; }
+
     [Required]
     public string Logradouro { get; set; }
 

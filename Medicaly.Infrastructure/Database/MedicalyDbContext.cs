@@ -27,6 +27,40 @@ public class MedicalyDbContext: DbContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.HasDefaultSchema("public");
+
+        modelBuilder.Entity<Administrador>(administradorModel =>
+        {
+            administradorModel.HasIndex(administrador => administrador.Email).IsUnique();
+            administradorModel.HasIndex(administrador => administrador.Cpf).IsUnique();
+
+            administradorModel
+                .HasOne<Endereco>()
+                .WithMany()
+                .HasForeignKey(administrador => administrador.EnderecoId);
+        });
+
+        modelBuilder.Entity<Paciente>(pacienteModel =>
+        {
+            pacienteModel.HasIndex(paciente => paciente.Email).IsUnique();
+            pacienteModel.HasIndex(paciente => paciente.Cpf).IsUnique();
+
+            pacienteModel
+                .HasOne(paciente => paciente.Endereco)
+                .WithMany()
+                .HasForeignKey(paciente => paciente.EnderecoId);
+        });
+
+        modelBuilder.Entity<Profissional>(profissionalModel =>
+        {
+            profissionalModel.HasIndex(profissional => profissional.Email).IsUnique();
+            profissionalModel.HasIndex(profissional => profissional.Cpf).IsUnique();
+            profissionalModel.HasIndex(profissional => profissional.CredencialDeSaude).IsUnique();
+
+            profissionalModel
+                .HasOne<Endereco>()
+                .WithMany()
+                .HasForeignKey(profissional => profissional.EnderecoId);
+        });
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)

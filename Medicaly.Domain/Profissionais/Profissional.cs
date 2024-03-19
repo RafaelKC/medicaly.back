@@ -27,7 +27,7 @@ public class Profissional: Entity, IUser
     public string Telefone { get; set; }
 
     [Required]
-    public DateOnly DataNascimento { get; set; }
+    public DateTime DataNascimento { get; set; }
 
     [Required]
     public Genero Genero { get; set; }

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Medicaly.Domain.Communs;
+using Medicaly.Domain.Enderecos;
 using Medicaly.Domain.Pacientes.Dtos;
 using Medicaly.Domain.Users;
 using Medicaly.Domain.Users.Enums;
@@ -25,12 +26,14 @@ public class Paciente: Entity, IUser
     [MinLength(10)]
     public string Telefone { get; set; }
 
-    public DateOnly DataNascimento { get; set; }
+    public DateTime DataNascimento { get; set; }
 
     [Required]
     public Genero Genero { get; set; }
 
     public Guid? EnderecoId { get; set; }
+
+    public Endereco Endereco { get; set; }
 
     public Paciente()
     {
