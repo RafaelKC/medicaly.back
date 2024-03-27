@@ -1,82 +1,38 @@
-﻿using Medicaly.Application.Authentications.Dtos;
+﻿using Medicaly.Application.Pacientes;
 using Medicaly.Application.Transients;
-using Medicaly.Domain.Enderecos;
-using Medicaly.Domain.Pacientes;
-using Medicaly.Domain.Pacientes.Dtos;
-using Medicaly.Domain.Users;
 using Medicaly.Domain.Users.Enums;
 using Medicaly.Infrastructure.Authentication;
-using Medicaly.Infrastructure.Database;
-using Microsoft.EntityFrameworkCore;
+using Medicaly.Infrastructure.Authentication.Dots;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Medicaly.Application.Authentications;
 
-public interface ISingUpService
+public interface ISingInService
 {
-    public Task<CreateUserOutput> SingUp(CreateUserInput<PacienteInput> pacienteInput);
+    public Task<LoginOutput> SingIn([FromRoute] UserTipo tipoUsuario, [FromBody] LoginInput loginInput);
 }
 
-public class SingUpService: ISingUpService, IAutoTransient
+public class SingInService: ISingInService, IAutoTransient
 {
-    private readonly MedicalyDbContext _medicalyDbContext;
     private readonly IAuthenticationService _authenticationService;
+    private readonly IPacienteService _pacienteService;
 
-    public SingUpService(MedicalyDbContext medicalyDbContext, IAuthenticationService authenticationService)
+    public SingInService(IAuthenticationService authenticationService)
     {
-        _medicalyDbContext = medicalyDbContext;
         _authenticationService = authenticationService;
     }
 
-    public async Task<CreateUserOutput> SingUp(CreateUserInput<PacienteInput> pacienteInput)
+    public async Task<LoginOutput> SingIn(UserTipo tipoUsuario, LoginInput loginInput)
     {
-        var paciente = await GetAlredyCreatedPaciente(pacienteInput.User.Cpf);
-        var alredyCreated = paciente != null;
-
-        if (alredyCreated) paciente = await UpdatePaciente(paciente, pacienteInput);
-        else paciente = await CreatePaciente(pacienteInput);
-
-        var credenciais = await _authenticationService.RegisterAsync(paciente.Email, pacienteInput.Password, new User(paciente, UserTipo.Paciente));
-
-        return new CreateUserOutput
+        if (tipoUsuario == UserTipo.Paciente)
         {
-            Success = credenciais.Success,
-            RefreshToken = credenciais.RefreshToken,
-            Token = credenciais.Token,
-        };
-    }
-
-    private async Task<Paciente> CreatePaciente(CreateUserInput<PacienteInput> pacienteInput)
-    {
-        var endereco = new Endereco(pacienteInput.Endereco);
-        var paciente = new Paciente(pacienteInput.User);
-        paciente.EnderecoId = endereco.Id;
-        paciente.Endereco = endereco;
-
-        await _medicalyDbContext.Pacientes.AddAsync(paciente);
-        await _medicalyDbContext.SaveChangesAsync();
-        _medicalyDbContext.ChangeTracker.Clear();
-
-        return paciente;
-    }
-
-    private async Task<Paciente> UpdatePaciente(Paciente paciente, CreateUserInput<PacienteInput> pacienteInput)
-    {
-        paciente.Endereco.Update(pacienteInput.Endereco);
-        paciente.Update(pacienteInput.User);
-
-        _medicalyDbContext.Pacientes.Update(paciente);
-        await _medicalyDbContext.SaveChangesAsync();
-        _medicalyDbContext.ChangeTracker.Clear();
-
-        return paciente;
-    }
-
-    public async Task<Paciente?> GetAlredyCreatedPaciente(string cpf)
-    {
-        return await _medicalyDbContext.Pacientes
-            .Include(paciente => paciente.Endereco)
-            .FirstOrDefaultAsync(paciente =>
-            paciente.Cpf == cpf);
-
+            var paciente = await _pacienteService.GetByEmail(loginInput.email);
+            if (paciente is null)
+                return new LoginOutput
+                {
+                    Success = false
+                };
+        }
+        return await _authenticationService.Login(loginInput);
     }
 }

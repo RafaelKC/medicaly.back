@@ -1,4 +1,5 @@
-﻿using Medicaly.Infrastructure.Authentication.Dots;
+﻿using Medicaly.Domain.Users;
+using Medicaly.Infrastructure.Authentication.Dots;
 using Medicaly.Infrastructure.Supabse;
 using Supabase.Gotrue;
 using Supabase.Gotrue.Exceptions;

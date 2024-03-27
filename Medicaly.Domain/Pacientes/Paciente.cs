@@ -41,7 +41,7 @@ public class Paciente: Entity, IUser
 
     public Paciente(PacienteInput input)
     {
-        Id = input.Id;
+        Id = input.Id != Guid.Empty ?  input.Id : Guid.NewGuid();
         Nome = input.Nome;
         Sobrenome = input.Sobrenome;
         Cpf = input.Cpf;
@@ -59,7 +59,7 @@ public class Paciente: Entity, IUser
         Email = input.Email;
         Telefone = input.Telefone;
         DataNascimento = input.DataNascimento;
-        EnderecoId = input.EnderecoId;
+        // EnderecoId = input.EnderecoId;
         Genero = input.Genero;
     }
 }
