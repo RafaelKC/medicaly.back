@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Medicaly.Api.Endereco;
 
-[Authorize]
+
 [Route("enderecos")]
 public class EnderecoController: ControllerBase
 {
@@ -34,7 +34,7 @@ public class EnderecoController: ControllerBase
     public async Task<ActionResult> Create([FromBody] EnderecoInput input)
     {
         var enderecoId = await _enderecoService.Create(input);
-        return enderecoId.HasValue ? Created(new Uri($"enderecos/{enderecoId.Value}"), null) : UnprocessableEntity();
+        return enderecoId.HasValue ? Created($"enderecos/{enderecoId.Value}", null) : UnprocessableEntity();
     }
 
     [HttpPut("{enderecoId:guid}")]

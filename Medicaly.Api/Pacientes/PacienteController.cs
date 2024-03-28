@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Medicaly.Api.Pacientes;
 
-[Authorize]
 [Route("pacientes")]
 public class PacienteController: ControllerBase
 {
@@ -37,7 +36,7 @@ public class PacienteController: ControllerBase
     public async Task<ActionResult> Create([FromBody] CreatePacienteInput input)
     {
         var pacienteId = await _createPacienteService.CreateUser(input);
-        return pacienteId.HasValue ? Created(new Uri($"pacientes/{pacienteId.Value}"), null) : UnprocessableEntity();
+        return pacienteId.HasValue ? Created($"pacientes/{pacienteId.Value}", null) : UnprocessableEntity();
     }
 
     [HttpPut("{pacienteId:guid}")]

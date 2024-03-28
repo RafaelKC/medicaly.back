@@ -15,16 +15,16 @@ public static class AddAuthenticationExtension
             .AddScoped<IAuthenticationService, AuthenticationService>()
             .AddScoped<IUserProvider, UserProvider>()
             .AddAuthentication(options =>
-                {
-                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
             .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
             {
                 options.Authority = configuration[AppConfig.AuthenticationAuthority];
                 options.Audience = configuration[AppConfig.AuthenticationAudience];
-                
+
                 options.IncludeErrorDetails = true;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
@@ -32,9 +32,9 @@ public static class AddAuthenticationExtension
                     ValidIssuer = configuration[AppConfig.AuthenticationIssuer],
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(configuration[AppConfig.AuthenticationKey])
+                    Encoding.UTF8.GetBytes(configuration[AppConfig.AuthenticationKey])
                     ),
-                    
+
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidAudience = configuration[AppConfig.AuthenticationAudience],
