@@ -1,13 +1,15 @@
-﻿using Medicaly.Infrastructure.Authentication.Dots;
+﻿using Medicaly.Domain.Users;
+using Medicaly.Infrastructure.Authentication.Dots;
 using Medicaly.Infrastructure.Supabse;
 using Supabase.Gotrue;
 using Supabase.Gotrue.Exceptions;
+using User = Medicaly.Domain.Users.User;
 
 namespace Medicaly.Infrastructure.Authentication;
 
 public interface IAuthenticationService
 {
-    Task<Guid?> RegisterAsync(string email, string password, Guid userEntityId);
+    Task<SingInOutput> RegisterAsync(string email, string password, User input);
     Task<LoginOutput> Login(LoginInput input);
     Task Logout();
 }
@@ -22,28 +24,32 @@ public class AuthenticationService: IAuthenticationService
     }
 
 
-    public async Task<Guid?> RegisterAsync(string email, string password, Guid userEntityId)
+    public async Task<SingInOutput> RegisterAsync(string email, string password, User input)
     {
-        var userData = new UserCredentialData
-        {
-            UserEntityId = userEntityId
-        };
-
         try
         {
             var session = await _supabseClient.Auth.SignUp(email, password, new SignUpOptions
             {
                 Data = new Dictionary<string, object>
                 {
-                    { "user", userData },
+                    { "user", input },
                 }
             });
-            
-            return session?.User is not null ? Guid.Parse(session.User.Id) : null;
+
+            return new SingInOutput
+            {
+                Success = session.User is not null,
+                Token = session.AccessToken,
+                RefreshToken = session.RefreshToken,
+                UserId = (session.User?.UserMetadata["user"] as User)?.Id
+            };
         }
         catch (GotrueException e)
         {
-            return null;
+            return new SingInOutput
+            {
+                Success = false
+            };
         }
     }
 
@@ -71,8 +77,6 @@ public class AuthenticationService: IAuthenticationService
 
     public async Task Logout()
     {
-        var token = _supabseClient.Auth.CurrentSession?.AccessToken;
-        var refresh = _supabseClient.Auth.CurrentSession?.RefreshToken;
         await _supabseClient.Auth.SignOut();
     }
 }

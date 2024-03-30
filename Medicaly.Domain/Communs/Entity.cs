@@ -1,4 +1,6 @@
-﻿namespace Medicaly.Domain.Communs;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Medicaly.Domain.Communs;
 
 public interface IEntity
 {
@@ -7,5 +9,6 @@ public interface IEntity
 
 public abstract class Entity: IEntity
 {
+    [Key]
     public Guid Id { get; set; }
 }
