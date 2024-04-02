@@ -1,6 +1,7 @@
 ﻿using Medicaly.Domain.Users;
 using Medicaly.Infrastructure.Authentication.Dots;
 using Medicaly.Infrastructure.Supabse;
+using Newtonsoft.Json;
 using Supabase.Gotrue;
 using Supabase.Gotrue.Exceptions;
 using User = Medicaly.Domain.Users.User;
@@ -32,7 +33,7 @@ public class AuthenticationService: IAuthenticationService
             {
                 Data = new Dictionary<string, object>
                 {
-                    { "user", input },
+                    { "user", JsonConvert.SerializeObject(input) },
                 }
             });
 
@@ -41,7 +42,7 @@ public class AuthenticationService: IAuthenticationService
                 Success = session.User is not null,
                 Token = session.AccessToken,
                 RefreshToken = session.RefreshToken,
-                UserId = (session.User?.UserMetadata["user"] as User)?.Id
+                UserId = input.Id
             };
         }
         catch (GotrueException e)

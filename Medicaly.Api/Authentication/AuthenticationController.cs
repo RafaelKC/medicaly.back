@@ -3,6 +3,7 @@ using Medicaly.Application.Authentications.Dtos;
 using Medicaly.Domain.Pacientes.Dtos;
 using Medicaly.Domain.Users;
 using Medicaly.Domain.Users.Enums;
+using Medicaly.Infrastructure.Authentication;
 using Medicaly.Infrastructure.Authentication.Dots;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,12 +17,14 @@ public class AuthenticationController: ControllerBase
     private readonly ISingUpService _singUpService;
     private readonly ISingInService _singInService;
     private readonly IUsuarioService _usuarioService;
+    private readonly IAuthenticationService _authenticationService;
 
-    public AuthenticationController(ISingUpService singUpService, ISingInService singInService, IUsuarioService usuarioService)
+    public AuthenticationController(ISingUpService singUpService, ISingInService singInService, IUsuarioService usuarioService, IAuthenticationService authenticationService)
     {
         _singUpService = singUpService;
         _singInService = singInService;
         _usuarioService = usuarioService;
+        _authenticationService = authenticationService;
     }
 
     [HttpPost("paciente/register")]
@@ -41,7 +44,15 @@ public class AuthenticationController: ControllerBase
         return UnprocessableEntity();
     }
 
+    [HttpPost("logout")]
+    [Authorize]
+    public async Task LogOut()
+    {
+        await _authenticationService.Logout();
+    }
+
     [HttpGet("current-user")]
+    [Authorize]
     public ActionResult<User> GetCurrentUser()
     {
         var usuario = _usuarioService.GetCurrentUser();

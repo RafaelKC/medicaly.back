@@ -1,6 +1,7 @@
 ﻿using Medicaly.Application.Transients;
 using Medicaly.Domain.Users;
 using Medicaly.Infrastructure.Supabse;
+using Newtonsoft.Json;
 
 namespace Medicaly.Application.Authentications;
 
@@ -21,7 +22,8 @@ public class UsuarioService: IUsuarioService, IAutoTransient
     public  User? GetCurrentUser()
     {
         var currentUser = _supabseClient.Auth.CurrentUser;
-        var userData = currentUser?.UserMetadata["user"];
-        return  userData as User;
+        var userData = currentUser?.UserMetadata["user"] as string;
+        if (string.IsNullOrWhiteSpace(userData)) return null;
+        return  (User)JsonConvert.DeserializeObject(userData, typeof(User));
     }
 }
