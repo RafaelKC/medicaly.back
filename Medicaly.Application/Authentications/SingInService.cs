@@ -17,9 +17,10 @@ public class SingInService: ISingInService, IAutoTransient
     private readonly IAuthenticationService _authenticationService;
     private readonly IPacienteService _pacienteService;
 
-    public SingInService(IAuthenticationService authenticationService)
+    public SingInService(IAuthenticationService authenticationService, IPacienteService pacienteService)
     {
         _authenticationService = authenticationService;
+        _pacienteService = pacienteService;
     }
 
     public async Task<LoginOutput> SingIn(UserTipo tipoUsuario, LoginInput loginInput)
