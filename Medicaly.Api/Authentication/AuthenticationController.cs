@@ -11,7 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace Medicaly.Api.Authentication;
 
 [Route("auth")]
-[AllowAnonymous]
+[ApiController]
+[Authorize]
 public class AuthenticationController: ControllerBase
 {
     private readonly ISingUpService _singUpService;
@@ -28,6 +29,7 @@ public class AuthenticationController: ControllerBase
     }
 
     [HttpPost("paciente/register")]
+    [AllowAnonymous]
     public async Task<ActionResult<CreateUserOutput>> RegisterPaciente(
         [FromBody] CreateUserInput<PacienteInput> pacienteInput)
     {
@@ -37,6 +39,7 @@ public class AuthenticationController: ControllerBase
     }
 
     [HttpPost("login")]
+    [AllowAnonymous]
     public async Task<ActionResult<LoginOutput>> Login([FromQuery] UserTipo tipoUsuario, [FromBody] LoginInput loginInput)
     {
         var result = await _singInService.SingIn(tipoUsuario, loginInput);
@@ -45,14 +48,12 @@ public class AuthenticationController: ControllerBase
     }
 
     [HttpPost("logout")]
-    [Authorize]
     public async Task LogOut()
     {
         await _authenticationService.Logout();
     }
 
     [HttpGet("current-user")]
-    [Authorize]
     public ActionResult<User> GetCurrentUser()
     {
         var usuario = _usuarioService.GetCurrentUser();

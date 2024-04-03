@@ -22,7 +22,6 @@ public static class AddAuthenticationExtension
             })
             .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
             {
-                options.Authority = configuration[AppConfig.AuthenticationAuthority];
                 options.Audience = configuration[AppConfig.AuthenticationAudience];
 
                 options.IncludeErrorDetails = true;
@@ -35,8 +34,8 @@ public static class AddAuthenticationExtension
                     Encoding.UTF8.GetBytes(configuration[AppConfig.AuthenticationKey])
                     ),
 
-                    ValidateAudience = true,
                     ValidateLifetime = true,
+                    ValidateAudience = true,
                     ValidAudience = configuration[AppConfig.AuthenticationAudience],
                 };
             });
