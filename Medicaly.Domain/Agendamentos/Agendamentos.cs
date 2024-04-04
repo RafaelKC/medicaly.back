@@ -3,7 +3,8 @@ using Medicaly.Domain.Communs;
 using Medicaly.Domain.Agendamentos.Dtos;
 using Medicaly.Domain.Agendamentos.Status;
 using Medicaly.Domain.Agendamentos.TipoProcedimento;
-
+using Medicaly.Domain.Profissionais;
+using Medicaly.Domain.Pacientes;
 
 namespace Medicaly.Domain.Agendamentos;
 
