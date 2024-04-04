@@ -19,13 +19,13 @@ public interface IPacienteService
     public Task<bool> Delete(Guid pacienteId);
 }
 
-public class PacienteService: IPacienteService, IAutoTransient
+public class MedicoService: IPacienteService, IAutoTransient
 {
-    private readonly ILogger<PacienteService> _logger;
+    private readonly ILogger<MedicoService> _logger;
     private readonly MedicalyDbContext _db;
     private DbSet<Paciente> _pacientes => _db.Pacientes;
 
-    public PacienteService(MedicalyDbContext db, ILogger<PacienteService> logger)
+    public MedicoService(MedicalyDbContext db, ILogger<MedicoService> logger)
     {
         _db = db;
         _logger = logger;

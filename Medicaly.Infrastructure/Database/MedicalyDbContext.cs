@@ -12,6 +12,7 @@ public class MedicalyDbContext: DbContext
     public DbSet<Administrador> Administradores { get; set; }
     public DbSet<Paciente> Pacientes { get; set; }
     public DbSet<Profissional> Profissionais { get; set; }
+    public DbSet<Agendamento> Agendamentos { get; set; }
 
     public MedicalyDbContext()
     {
@@ -61,6 +62,10 @@ public class MedicalyDbContext: DbContext
                 .WithMany()
                 .HasForeignKey(profissional => profissional.EnderecoId);
         });
+
+        modelBuilder.Entity<Agendamento>(agendamentoModel => {
+            agendamentoModel.HasIndex
+        })
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
