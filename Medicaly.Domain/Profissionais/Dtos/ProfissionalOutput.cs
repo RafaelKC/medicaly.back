@@ -20,8 +20,8 @@ public class ProfissionalOutput: EntityDto, IUser
     public string Atuacoes { get; set; }
     public string Especialidades { get; set; }
     public TipoProfissional Tipo { get; set; }
-    public TimeSpan InicioExpediente { get; set; }
-    public TimeSpan FimExpedienteExpediente { get; set; }
+    public double InicioExpediente { get; set; }
+    public double FimExpedienteExpediente { get; set; }
     
     public ProfissionalOutput(Profissional input)
     {
@@ -38,7 +38,7 @@ public class ProfissionalOutput: EntityDto, IUser
         Atuacoes = input.Atuacoes;
         Especialidades = input.Especialidades;
         Tipo = input.Tipo;
-        InicioExpediente = input.InicioExpediente;
-        FimExpedienteExpediente = input.FimExpedienteExpediente;
+        InicioExpediente = input.InicioExpediente.TotalMilliseconds;
+        FimExpedienteExpediente = input.FimExpedienteExpediente.TotalMilliseconds;
     }
 }

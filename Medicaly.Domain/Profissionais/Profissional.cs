@@ -69,8 +69,8 @@ public class Profissional: Entity, IUser
         Atuacoes = input.Atuacoes;
         Especialidades = input.Especialidades;
         Tipo = input.Tipo;
-        InicioExpediente = input.InicioExpediente;
-        FimExpedienteExpediente = input.FimExpedienteExpediente;
+        InicioExpediente = TimeSpan.FromMilliseconds(input.InicioExpediente);
+        FimExpedienteExpediente = TimeSpan.FromMilliseconds(input.FimExpedienteExpediente);
     }
     
     public void Update(ProfissionalInput input)
@@ -86,7 +86,7 @@ public class Profissional: Entity, IUser
         Atuacoes = input.Atuacoes;
         Especialidades = input.Especialidades;
         Tipo = input.Tipo;
-        InicioExpediente = input.InicioExpediente;
-        FimExpedienteExpediente = input.FimExpedienteExpediente;
+        InicioExpediente = TimeSpan.FromMilliseconds(input.InicioExpediente);
+        FimExpedienteExpediente = TimeSpan.FromMilliseconds(input.FimExpedienteExpediente);
     }
 }

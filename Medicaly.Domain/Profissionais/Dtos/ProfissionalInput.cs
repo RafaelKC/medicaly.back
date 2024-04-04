@@ -43,8 +43,8 @@ public class ProfissionalInput: EntityDto, IUser
     public TipoProfissional Tipo { get; set; }
 
     [Required]
-    public TimeSpan InicioExpediente { get; set; }
+    public double InicioExpediente { get; set; }
 
     [Required]
-    public TimeSpan FimExpedienteExpediente { get; set; }
+    public double FimExpedienteExpediente { get; set; }
 }
