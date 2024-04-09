@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using Medicaly.Domain.Agendamento.Enums;
 using Medicaly.Domain.Communs;
-using Medicaly.Domain.Agendamento.Status;
-using Medicaly.Domain.Agendamento.TipoProcedimento;
 
 namespace Medicaly.Domain.Agendamentos.Dtos;
 

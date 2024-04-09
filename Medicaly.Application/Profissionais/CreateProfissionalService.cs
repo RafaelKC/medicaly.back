@@ -1,12 +1,12 @@
 ﻿using Medicaly.Application.Enrecos;
 using Medicaly.Application.Profissionais.Dtos;
+using Medicaly.Application.Profissionals;
 using Medicaly.Application.Transients;
-using Medicaly.Infrastructure.Authentication;
 using Medicaly.Domain.Users;
 using Medicaly.Domain.Users.Enums;
+using Medicaly.Infrastructure.Authentication;
 
-
-namespace Medicaly.Application.Profissionals;
+namespace Medicaly.Application.Profissionais;
 
 public interface ICreateProfissionalService
 {

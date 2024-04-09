@@ -1,10 +1,9 @@
 using System.ComponentModel.DataAnnotations;
-using Medicaly.Domain.Communs;
+using Medicaly.Domain.Agendamento.Enums;
 using Medicaly.Domain.Agendamentos.Dtos;
-using Medicaly.Domain.Agendamentos.Status;
-using Medicaly.Domain.Agendamentos.TipoProcedimento;
-using Medicaly.Domain.Profissionais;
+using Medicaly.Domain.Communs;
 using Medicaly.Domain.Pacientes;
+using Medicaly.Domain.Profissionais;
 
 namespace Medicaly.Domain.Agendamentos;
 
@@ -24,7 +23,7 @@ public class Agendamento: Entity
     [Required]
     public Guid IdProfissional { get; set; }
 
-    public Profissional Profissional { get; set }
+    public Profissional Profissional { get; set; }
 
     [Required]
     public Guid IdPaciente { get; set; }

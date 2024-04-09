@@ -64,16 +64,15 @@ public class MedicalyDbContext: DbContext
                 .HasForeignKey(profissional => profissional.EnderecoId);
         });
 
-        modelBuilder.Entity<Agendamento>(agendamentoModel => {
-            agendamentoModel.HasOne(a => a.Paciente).WithMany()
-            .HasForeignKey(a => a.IdPaciente);
-         
-            agendamentoModel.HasOne(a=> a.Profissional).WithMany()
-            .HasForeignKey(a =>a.IdProfissional)
+        modelBuilder.Entity<Agendamento>(agendamentoModel =>
+            {
+                agendamentoModel.HasOne(a => a.Paciente).WithMany()
+                    .HasForeignKey(a => a.IdPaciente);
 
-        }
-        
-        )
+                agendamentoModel.HasOne(a => a.Profissional).WithMany()
+                    .HasForeignKey(a => a.IdProfissional);
+            }
+        );
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
