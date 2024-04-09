@@ -8,12 +8,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace Medicaly.Api.Pacientes;
 
 [Route("pacientes")]
-public class PacienteController: ControllerBase
+public class ProfissionalController: ControllerBase
 {
     private readonly IPacienteService _pacienteService;
     private readonly ICreatePacienteService _createPacienteService;
 
-    public PacienteController(IPacienteService pacienteService, ICreatePacienteService createPacienteService)
+    public ProfissionalController(IPacienteService pacienteService, ICreatePacienteService createPacienteService)
     {
         _pacienteService = pacienteService;
         _createPacienteService = createPacienteService;
@@ -33,7 +33,7 @@ public class PacienteController: ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> Create([FromBody] CreatePacienteInput input)
+    public async Task<ActionResult> Create([FromBody] CreateMedicoInput input)
     {
         var pacienteId = await _createPacienteService.CreateUser(input);
         return pacienteId.HasValue ? Created($"pacientes/{pacienteId.Value}", null) : UnprocessableEntity();

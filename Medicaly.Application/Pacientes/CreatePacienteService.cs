@@ -6,21 +6,21 @@ namespace Medicaly.Application.Pacientes;
 
 public interface ICreatePacienteService
 {
-    public Task<Guid?> CreateUser(CreatePacienteInput input);
+    public Task<Guid?> CreateUser(CreateMedicoInput input);
 }
 
-public class CreatePacienteService: ICreatePacienteService, IAutoTransient
+public class CreateMedicoService: ICreatePacienteService, IAutoTransient
 {
     private readonly IEnderecoService _enderecoService;
     private readonly IPacienteService _pacienteService;
 
-    public CreatePacienteService(IEnderecoService enderecoService, IPacienteService pacienteService)
+    public CreateMedicoService(IEnderecoService enderecoService, IPacienteService pacienteService)
     {
         _enderecoService = enderecoService;
         _pacienteService = pacienteService;
     }
 
-    public async Task<Guid?> CreateUser(CreatePacienteInput input)
+    public async Task<Guid?> CreateUser(CreateMedicoInput input)
     {
         input.Endereco.Id = input.Endereco.Id != Guid.Empty ? input.Endereco.Id : Guid.NewGuid();
         var enderecoCriado = await _enderecoService.Create(input.Endereco);

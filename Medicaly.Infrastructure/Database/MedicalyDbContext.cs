@@ -1,4 +1,5 @@
 ﻿using Medicaly.Domain.Administradores;
+using Medicaly.Domain.Agendamentos;
 using Medicaly.Domain.Enderecos;
 using Medicaly.Domain.Pacientes;
 using Medicaly.Domain.Profissionais;
@@ -12,6 +13,7 @@ public class MedicalyDbContext: DbContext
     public DbSet<Administrador> Administradores { get; set; }
     public DbSet<Paciente> Pacientes { get; set; }
     public DbSet<Profissional> Profissionais { get; set; }
+    public DbSet<Agendamento> Agendamentos { get; set; }
 
     public MedicalyDbContext()
     {
@@ -61,6 +63,17 @@ public class MedicalyDbContext: DbContext
                 .WithMany()
                 .HasForeignKey(profissional => profissional.EnderecoId);
         });
+
+        modelBuilder.Entity<Agendamento>(agendamentoModel => {
+            agendamentoModel.HasOne(a => a.Paciente).WithMany()
+            .HasForeignKey(a => a.IdPaciente);
+         
+            agendamentoModel.HasOne(a=> a.Profissional).WithMany()
+            .HasForeignKey(a =>a.IdProfissional)
+
+        }
+        
+        )
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)

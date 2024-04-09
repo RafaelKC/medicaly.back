@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Medicaly.Domain": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:63684;http://localhost:63687"
+    }
+  }
+}
