@@ -3,3 +3,7 @@ obj/
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
+.vs
+.vs/Medicaly/v17/.suo
+.vs/ProjectEvaluation/medicaly.metadata.v2
+.vs/ProjectEvaluation/medicaly.projects.v2
