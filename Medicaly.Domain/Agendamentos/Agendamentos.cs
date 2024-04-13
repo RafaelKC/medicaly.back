@@ -31,7 +31,7 @@ public class Agendamento: Entity
     public Paciente Paciente { get; set; }
 
 
-    public Guid IdUnicadeAtendimento { get; set; }
+    public Guid IdUnidadeAtendimento { get; set; }
 
 
 

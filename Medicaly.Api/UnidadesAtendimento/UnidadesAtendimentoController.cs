@@ -1,22 +1,23 @@
 ﻿using Medicaly.Application.Communs;
-using Medicaly.Application.Enrecos;
 using Medicaly.Application.UnidadesAtendimento;
-using Medicaly.Domain.Enderecos.Dtos;
+using Medicaly.Application.UnidadesAtendimento.Dtos;
 using Medicaly.Domain.UnidadeAtendimento.Dtos;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Medicaly.Api.UnidadeAtendimento;
+namespace Medicaly.Api.UnidadesAtendimento;
 
 
 [Route("unidades-atendimento")]
 public class UnidadeAtendimentoController: ControllerBase
 {
     private readonly IUnidadeAtendimentoService _unidadeAtendimentoService;
+    private readonly ICreateUnidadeAtendimentoService _createUnidadeAtendimentoService;
 
-    public UnidadeAtendimentoController(IUnidadeAtendimentoService unidadeAtendimentoService)
+    public UnidadeAtendimentoController(IUnidadeAtendimentoService unidadeAtendimentoService, ICreateUnidadeAtendimentoService createUnidadeAtendimentoService)
     {
         _unidadeAtendimentoService = unidadeAtendimentoService;
+        _createUnidadeAtendimentoService = createUnidadeAtendimentoService;
+        
     }
 
     [HttpGet]
@@ -33,11 +34,12 @@ public class UnidadeAtendimentoController: ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> Create([FromBody] UnidadeAtendimentoInput input)
+    public async Task<ActionResult> Create([FromBody] CreateUnidadeAtendimentoInput input)
     {
-        var unidadeAtendimentoId = await _unidadeAtendimentoService.Create(input);
+        var unidadeAtendimentoId = await _createUnidadeAtendimentoService.CreateUnidadeAtendimento(input);
         return unidadeAtendimentoId.HasValue ? Created($"unidades-atendimento/{unidadeAtendimentoId.Value}", null) : UnprocessableEntity();
     }
+    
 
     [HttpPut("{unidadeAtendimentoId:guid}")]
     public async Task<ActionResult> Update([FromRoute] Guid unidadeAtendimentoId, [FromBody] UnidadeAtendimentoInput input)
