@@ -48,7 +48,7 @@ public class Profissional: Entity, IUser
     public TimeSpan InicioExpediente { get; set; }
 
     [Required]
-    public TimeSpan FimExpedienteExpediente { get; set; }
+    public TimeSpan FimExpediente { get; set; }
 
     public Profissional()
     {
@@ -70,7 +70,7 @@ public class Profissional: Entity, IUser
         Especialidades = input.Especialidades;
         Tipo = input.Tipo;
         InicioExpediente = TimeSpan.FromMilliseconds(input.InicioExpediente);
-        FimExpedienteExpediente = TimeSpan.FromMilliseconds(input.FimExpedienteExpediente);
+        FimExpediente = TimeSpan.FromMilliseconds(input.FimExpediente);
     }
     
     public void Update(ProfissionalInput input)
@@ -87,6 +87,6 @@ public class Profissional: Entity, IUser
         Especialidades = input.Especialidades;
         Tipo = input.Tipo;
         InicioExpediente = TimeSpan.FromMilliseconds(input.InicioExpediente);
-        FimExpedienteExpediente = TimeSpan.FromMilliseconds(input.FimExpedienteExpediente);
+        FimExpediente = TimeSpan.FromMilliseconds(input.FimExpediente);
     }
 }

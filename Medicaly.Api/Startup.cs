@@ -1,4 +1,5 @@
-﻿using Medicaly.Application.Transients;
+﻿using Medicaly.Application.Enrecos;
+using Medicaly.Application.Transients;
 using Medicaly.Infrastructure.Extensions;
 
 namespace Medicaly.Api;

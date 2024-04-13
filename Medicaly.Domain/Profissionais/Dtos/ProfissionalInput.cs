@@ -46,5 +46,5 @@ public class ProfissionalInput: EntityDto, IUser
     public double InicioExpediente { get; set; }
 
     [Required]
-    public double FimExpedienteExpediente { get; set; }
+    public double FimExpediente { get; set; }
 }
