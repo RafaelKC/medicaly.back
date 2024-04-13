@@ -50,6 +50,8 @@ public class Profissional: Entity, IUser
     [Required]
     public TimeSpan FimExpediente { get; set; }
 
+    public DayOfWeek[] DiasAtendidos { get; set; }
+
     public Profissional()
     {
     }
@@ -66,11 +68,12 @@ public class Profissional: Entity, IUser
         EnderecoId = input.EnderecoId;
         Genero = input.Genero;
         CredencialDeSaude = input.CredencialDeSaude;
-        Atuacoes = input.Atuacoes;
-        Especialidades = input.Especialidades;
+        Atuacoes = string.Join(",", input.Atuacoes);
+        Especialidades = string.Join(",", input.Especialidades);
         Tipo = input.Tipo;
         InicioExpediente = TimeSpan.FromMilliseconds(input.InicioExpediente);
         FimExpediente = TimeSpan.FromMilliseconds(input.FimExpediente);
+        DiasAtendidos = input.DiasAtendidos;
     }
     
     public void Update(ProfissionalInput input)
@@ -83,10 +86,11 @@ public class Profissional: Entity, IUser
         EnderecoId = input.EnderecoId;
         Genero = input.Genero;
         CredencialDeSaude = input.CredencialDeSaude;
-        Atuacoes = input.Atuacoes;
-        Especialidades = input.Especialidades;
+        Atuacoes = string.Join(",", input.Atuacoes);
+        Especialidades = string.Join(",", input.Especialidades);
         Tipo = input.Tipo;
         InicioExpediente = TimeSpan.FromMilliseconds(input.InicioExpediente);
+        DiasAtendidos = input.DiasAtendidos;
         FimExpediente = TimeSpan.FromMilliseconds(input.FimExpediente);
     }
 }

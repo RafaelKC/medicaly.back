@@ -16,7 +16,6 @@ public class EnderecoInput: EntityDto
     [Required]
     public string Logradouro { get; set; }
 
-    [Required]
     public int Numero { get; set; }
 
     [Required]
@@ -28,9 +27,6 @@ public class EnderecoInput: EntityDto
     [Required]
     public string CodigoIbgeCidade { get; set; }
 
-    [Required]
     public string Complemento { get; set; }
-
-    [Required]
     public string Observacao { get; set; }
 }

@@ -17,11 +17,12 @@ public class ProfissionalOutput: EntityDto, IUser
     public Guid? EnderecoId { get; set; }
     public Genero Genero { get; set; }
     public string CredencialDeSaude { get; set; }
-    public string Atuacoes { get; set; }
-    public string Especialidades { get; set; }
+    public List<string> Atuacoes { get; set; }
+    public List<string> Especialidades { get; set; }
     public TipoProfissional Tipo { get; set; }
     public double InicioExpediente { get; set; }
     public double FimExpediente { get; set; }
+    public DayOfWeek[] DiasAtendidos { get; set; }
     
     public ProfissionalOutput(Profissional input)
     {
@@ -35,10 +36,11 @@ public class ProfissionalOutput: EntityDto, IUser
         EnderecoId = input.EnderecoId;
         Genero = input.Genero;
         CredencialDeSaude = input.CredencialDeSaude;
-        Atuacoes = input.Atuacoes;
-        Especialidades = input.Especialidades;
+        Atuacoes = string.IsNullOrWhiteSpace(input.Atuacoes) ? new List<string>() : input.Atuacoes.Split(",").ToList();
+        Especialidades = string.IsNullOrWhiteSpace(input.Especialidades) ? new List<string>() : input.Especialidades.Split(",").ToList();
         Tipo = input.Tipo;
         InicioExpediente = input.InicioExpediente.TotalMilliseconds;
         FimExpediente = input.FimExpediente.TotalMilliseconds;
+        DiasAtendidos = input.DiasAtendidos;
     }
 }

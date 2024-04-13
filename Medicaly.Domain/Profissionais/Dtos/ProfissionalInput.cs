@@ -35,9 +35,9 @@ public class ProfissionalInput: EntityDto, IUser
     [Required]
     public string CredencialDeSaude { get; set; }
 
-    public string Atuacoes { get; set; }
+    public List<string> Atuacoes { get; set; }
 
-    public string Especialidades { get; set; }
+    public List<string> Especialidades { get; set; }
 
     [Required]
     public TipoProfissional Tipo { get; set; }
@@ -47,4 +47,7 @@ public class ProfissionalInput: EntityDto, IUser
 
     [Required]
     public double FimExpediente { get; set; }
+
+    [Required]
+    public DayOfWeek[] DiasAtendidos { get; set; }
 }
