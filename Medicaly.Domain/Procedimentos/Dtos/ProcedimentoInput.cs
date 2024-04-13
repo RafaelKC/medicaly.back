@@ -4,7 +4,7 @@ using Medicaly.Domain.Communs;
 
 namespace Medicaly.Domain.Agendamentos.Dtos;
 
-public class AgendamentoInput: EntityDto
+public class ProcedimentoInput: EntityDto
 {
     public TipoProcedimento TipoProcedimento { get; set; }
 
@@ -23,7 +23,7 @@ public class AgendamentoInput: EntityDto
     public Guid IdPaciente { get; set; }
 
 
-    public Guid IdUnicadeAtendimento { get; set; }
+    public Guid IdUnidadeAtendimento { get; set; }
 
 
 

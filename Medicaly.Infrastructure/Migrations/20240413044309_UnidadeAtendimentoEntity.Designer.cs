@@ -3,6 +3,7 @@ using System;
 using Medicaly.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Medicaly.Infrastructure.Migrations
 {
     [DbContext(typeof(MedicalyDbContext))]
-    partial class MedicalyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240413044309_UnidadeAtendimentoEntity")]
+    partial class UnidadeAtendimentoEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,7 +75,7 @@ namespace Medicaly.Infrastructure.Migrations
                     b.ToTable("Administradores", "public");
                 });
 
-            modelBuilder.Entity("Medicaly.Domain.Agendamentos.Procedimento", b =>
+            modelBuilder.Entity("Medicaly.Domain.Agendamentos.Agendamento", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -92,7 +94,7 @@ namespace Medicaly.Infrastructure.Migrations
                     b.Property<Guid>("IdProfissional")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("IdUnidadeAtendimento")
+                    b.Property<Guid>("IdUnicadeAtendimento")
                         .HasColumnType("uuid");
 
                     b.Property<int>("Status")
@@ -107,9 +109,7 @@ namespace Medicaly.Infrastructure.Migrations
 
                     b.HasIndex("IdProfissional");
 
-                    b.HasIndex("IdUnidadeAtendimento");
-
-                    b.ToTable("Procedimentos", "public");
+                    b.ToTable("Agendamentos", "public");
                 });
 
             modelBuilder.Entity("Medicaly.Domain.Enderecos.Endereco", b =>
@@ -316,7 +316,7 @@ namespace Medicaly.Infrastructure.Migrations
                         .HasForeignKey("EnderecoId");
                 });
 
-            modelBuilder.Entity("Medicaly.Domain.Agendamentos.Procedimento", b =>
+            modelBuilder.Entity("Medicaly.Domain.Agendamentos.Agendamento", b =>
                 {
                     b.HasOne("Medicaly.Domain.Pacientes.Paciente", "Paciente")
                         .WithMany()
@@ -327,12 +327,6 @@ namespace Medicaly.Infrastructure.Migrations
                     b.HasOne("Medicaly.Domain.Profissionais.Profissional", "Profissional")
                         .WithMany()
                         .HasForeignKey("IdProfissional")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Medicaly.Domain.UnidadeAtendimento.UnidadeAtendimento", null)
-                        .WithMany()
-                        .HasForeignKey("IdUnidadeAtendimento")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

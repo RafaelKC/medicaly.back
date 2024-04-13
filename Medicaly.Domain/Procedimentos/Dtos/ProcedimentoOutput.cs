@@ -1,9 +1,10 @@
 using Medicaly.Domain.Agendamento.Enums;
+using Medicaly.Domain.Agendamentos;
 using Medicaly.Domain.Communs;
 
-namespace Medicaly.Domain.Agendamentos.Dtos;
+namespace Medicaly.Domain.Procedimentos.Dtos;
 
-public class AgendamentoOutput : EntityDto
+public class ProcedimentoOutput : EntityDto
 {
     public TipoProcedimento TipoProcedimento { get; set; }
     public Status Status { get; set; }
@@ -11,9 +12,10 @@ public class AgendamentoOutput : EntityDto
     public DateTime Data { get; set; }
     public Guid IdPaciente { get; set; }
     public Guid IdProfissional { get; set; }
+    public Guid IdUnidadeAtendimento { get; set; }
 
 
-    public AgendamentoOutput(Agendamento input)
+    public ProcedimentoOutput(Procedimento input)
     {
         Id = input.Id;
         TipoProcedimento = input.TipoProcedimento;
@@ -22,6 +24,7 @@ public class AgendamentoOutput : EntityDto
         Data = input.Data;
         IdPaciente = input.IdPaciente;
         IdProfissional = input.IdProfissional;
+        IdUnidadeAtendimento = input.IdUnidadeAtendimento;
 
     }
 }
