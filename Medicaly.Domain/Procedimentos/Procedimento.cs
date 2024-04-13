@@ -7,7 +7,7 @@ using Medicaly.Domain.Profissionais;
 
 namespace Medicaly.Domain.Agendamentos;
 
-public class Agendamento: Entity
+public class Procedimento: Entity
 {
     public TipoProcedimento TipoProcedimento { get; set; }
 
@@ -35,11 +35,11 @@ public class Agendamento: Entity
 
 
 
-    public Agendamento() {
+    public Procedimento() {
 
     }
 
-    public Agendamento(AgendamentoInput input)
+    public Procedimento(ProcedimentoInput input)
     {
         Id = input.Id != Guid.Empty ? input.Id : Guid.NewGuid();
         TipoProcedimento = input.TipoProcedimento;
@@ -48,10 +48,11 @@ public class Agendamento: Entity
         Data = input.Data;
         IdPaciente = input.IdPaciente;
         IdProfissional = input.IdProfissional;
+        IdUnidadeAtendimento = input.IdUnidadeAtendimento;
     }
 
 
-    public void Update(AgendamentoInput input)
+    public void Update(ProcedimentoInput input)
     {
         TipoProcedimento = input.TipoProcedimento;
         Status = input.Status;
