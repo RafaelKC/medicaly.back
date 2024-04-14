@@ -34,7 +34,20 @@ public class AuthenticationController: ControllerBase
         [FromBody] CreateUserInput<PacienteInput> pacienteInput)
     {
         var result = await _singUpService.SingUp(pacienteInput);
-        if (result.Success) return Ok(result);
+        if (result.Success)
+        {
+            var loginResult = await _singInService.SingIn(UserTipo.Paciente, new LoginInput
+            {
+                email = pacienteInput.User.Email,
+                password = pacienteInput.Password
+            });
+            return new CreateUserOutput()
+            {
+                Success = loginResult.Success,
+                Token = loginResult.Token,
+                RefreshToken = loginResult.RefreshToken,
+            };
+        };
         return UnprocessableEntity();
     }
 
