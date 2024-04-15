@@ -13,12 +13,12 @@ public interface ICreateProfissionalService
     public Task<Guid?> CreateUser(CreateProfissionalInput input);
 }
 
-public class CreateProfissionalService: ICreateProfissionalService, IAutoTransient
+public class CreateAdministradorService: ICreateProfissionalService, IAutoTransient
 {
     private readonly IEnderecoService _enderecoService;
     private readonly IProfissionalService _ProfissionalService;
     private readonly IAuthenticationService _authenticationService;
-    public CreateProfissionalService(IEnderecoService enderecoService, IAuthenticationService authenticationService,IProfissionalService ProfissionalService)
+    public CreateAdministradorService(IEnderecoService enderecoService, IAuthenticationService authenticationService,IProfissionalService ProfissionalService)
     {
         _enderecoService = enderecoService;
         _ProfissionalService = ProfissionalService;

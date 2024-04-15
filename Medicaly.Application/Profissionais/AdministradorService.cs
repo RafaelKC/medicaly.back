@@ -18,13 +18,13 @@ public interface IProfissionalService
     public Task<bool> Delete(Guid ProfissionalId);
 }
 
-public class ProfissionalService: IProfissionalService, IAutoTransient
+public class AdministradorService: IProfissionalService, IAutoTransient
 {
-    private readonly ILogger<ProfissionalService> _logger;
+    private readonly ILogger<AdministradorService> _logger;
     private readonly MedicalyDbContext _db;
     private DbSet<Profissional> _Profissionals => _db.Profissionais;
 
-    public ProfissionalService(MedicalyDbContext db, ILogger<ProfissionalService> logger)
+    public AdministradorService(MedicalyDbContext db, ILogger<AdministradorService> logger)
     {
         _db = db;
         _logger = logger;
