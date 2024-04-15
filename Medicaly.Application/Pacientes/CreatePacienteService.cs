@@ -9,12 +9,12 @@ public interface ICreatePacienteService
     public Task<Guid?> CreateUser(CreateMedicoInput input);
 }
 
-public class CreateMedicoService: ICreatePacienteService, IAutoTransient
+public class CreatePacienteService: ICreatePacienteService, IAutoTransient
 {
     private readonly IEnderecoService _enderecoService;
     private readonly IPacienteService _pacienteService;
 
-    public CreateMedicoService(IEnderecoService enderecoService, IPacienteService pacienteService)
+    public CreatePacienteService(IEnderecoService enderecoService, IPacienteService pacienteService)
     {
         _enderecoService = enderecoService;
         _pacienteService = pacienteService;

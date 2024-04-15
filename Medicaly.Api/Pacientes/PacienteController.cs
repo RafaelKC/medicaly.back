@@ -8,12 +8,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace Medicaly.Api.Pacientes;
 
 [Route("pacientes")]
-public class ProfissionalController: ControllerBase
+public class PacienteController: ControllerBase
 {
     private readonly IPacienteService _pacienteService;
     private readonly ICreatePacienteService _createPacienteService;
 
-    public ProfissionalController(IPacienteService pacienteService, ICreatePacienteService createPacienteService)
+    public PacienteController(IPacienteService pacienteService, ICreatePacienteService createPacienteService)
     {
         _pacienteService = pacienteService;
         _createPacienteService = createPacienteService;
