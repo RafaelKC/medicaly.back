@@ -34,6 +34,7 @@ public class CreateAdministradorService: ICreateAdministradorService, IAutoTrans
             var usuarioCriado = await _AdministradorService.Create(input.Administrador);
             if (usuarioCriado.HasValue)
             {
+                input.Administrador.Id = usuarioCriado.Value;
                var result =  await _authenticationService.RegisterAsync(input.Administrador.Email, input.Password, new User(input.Administrador, UserTipo.Administrador));
                 if (result.Success)
                 {

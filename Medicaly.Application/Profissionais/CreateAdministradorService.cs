@@ -35,6 +35,7 @@ public class CreateAdministradorService: ICreateProfissionalService, IAutoTransi
             var usuarioCriado = await _ProfissionalService.Create(input.Profissional);
             if (usuarioCriado.HasValue)
             {
+                input.Profissional.Id = usuarioCriado.Value;
                var result =  await _authenticationService.RegisterAsync(input.Profissional.Email, input.Password, new User(input.Profissional, UserTipo.ProfissionalSaude));
                 if (result.Success)
                 {

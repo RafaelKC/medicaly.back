@@ -57,7 +57,12 @@ public class SingUpService: ISingUpService, IAutoTransient
         {
             await _enderecoService.Create(pacienteInput.Endereco);
             pacienteInput.User.EnderecoId = pacienteInput.Endereco.Id;
-            userAtualizadoCriado = (await _pacienteService.Create(pacienteInput.User)) != null;
+            var userId = await _pacienteService.Create(pacienteInput.User);
+            userAtualizadoCriado = userId.HasValue;
+            if (userAtualizadoCriado)
+            {
+                pacienteInput.User.Id = userId.Value;
+            }
         }
 
         if (!userAtualizadoCriado)
