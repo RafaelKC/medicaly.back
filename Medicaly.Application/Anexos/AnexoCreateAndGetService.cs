@@ -34,7 +34,9 @@ public class AnexoCreateAndGetService: IAnexoCreateAndGetService, IAutoTransient
         return new AnexoCreatedOutput
         {
             AnexoId = output.Id,
-            UploadLink = url.SignedUrl
+            UploadLink = url.SignedUrl,
+            Key = url.Key,
+            Token = url.Token,
         };
     }
 
