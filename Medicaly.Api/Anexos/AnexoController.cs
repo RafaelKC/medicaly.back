@@ -2,11 +2,13 @@
 using Medicaly.Application.Anexos.Dtos;
 using Medicaly.Application.Communs;
 using Medicaly.Domain.Anexos.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medicaly.Api.Anexos;
 
 [Route("anexos")]
+[Authorize]
 public class AnexoController: ControllerBase
 {
     private readonly IAnexoService _anexoService;
@@ -32,7 +34,7 @@ public class AnexoController: ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> Create([FromBody] AnexoInput input)
+    public async Task<ActionResult<AnexoCreatedOutput>> Create([FromBody] AnexoInput input)
     {
         var anexo = await _anexoCreateAndGetService.Create(input);
         return anexo != null ? Created($"enderecos/{anexo.AnexoId}", anexo) : UnprocessableEntity();

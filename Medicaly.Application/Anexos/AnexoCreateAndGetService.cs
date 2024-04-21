@@ -28,7 +28,7 @@ public class AnexoCreateAndGetService: IAnexoCreateAndGetService, IAutoTransient
     public async Task<AnexoCreatedOutput?> Create(AnexoInput input)
     {
         var output = await _anexoService.Create(input);
-        if (output != null) return null;
+        if (output == null) return null;
 
         var url = await _supabseClient.AnexosStorage.CreateUploadSignedUrl(output.BucketEndereco);
         return new AnexoCreatedOutput
@@ -42,6 +42,11 @@ public class AnexoCreateAndGetService: IAnexoCreateAndGetService, IAutoTransient
     {
         var pagedResult = await _anexoService.GetList(input);
         var enderecos = pagedResult.Items.Select(a => a.BucketEndereco).ToList();
+
+        if (enderecos.Count < 1) return new PagedResult<AnexoComLinkOutput>
+        {
+            Items = new List<AnexoComLinkOutput>()
+        };
 
         var umaHoraEmSegundos = 60 * 60;
 

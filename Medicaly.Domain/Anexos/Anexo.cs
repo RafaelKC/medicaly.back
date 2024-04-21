@@ -1,4 +1,5 @@
-﻿using Medicaly.Domain.Anexos.Dtos;
+﻿using System.Text.RegularExpressions;
+using Medicaly.Domain.Anexos.Dtos;
 using Medicaly.Domain.Communs;
 
 namespace Medicaly.Domain.Anexos;
@@ -30,7 +31,9 @@ public class Anexo: Entity
         Nome = string.Join(".", nameSplited.Take(nameSplited.Count() - 1));
         Extencao = nameSplited.Last();
 
-        BucketEndereco = $"{BucketPrefix}_{Nome}.{Extencao}";
+        var path = $"{BucketPrefix}_{Nome}.{Extencao}";
+
+        BucketEndereco = path.Replace(" ", ""); ;
     }
 
     public void Update(AnexoInput input)
@@ -46,6 +49,8 @@ public class Anexo: Entity
         Nome = string.Join(".", nameSplited.Take(nameSplited.Count() - 1));
         Extencao = nameSplited.Last();
 
-        BucketEndereco = $"{BucketPrefix}_{Nome}.{Extencao}";
+        var path = $"{BucketPrefix}_{Nome}.{Extencao}";
+
+        BucketEndereco = Regex.Replace(path,  @"s", ""); ;
     }
 }
