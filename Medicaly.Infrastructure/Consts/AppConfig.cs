@@ -2,7 +2,7 @@
 
 public static class AppConfig
 {
-    public const string ConsulHostKey = "CONSUL_HOST";
+    public const string SupabeseBucketName = "anexos";
     public const string AppName = "Medicaly";
     
     public const string SupabaseUrlKey = "SupabaseUrl";

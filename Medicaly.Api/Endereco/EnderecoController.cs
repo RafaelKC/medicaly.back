@@ -23,8 +23,6 @@ public class EnderecoController: ControllerBase
         return await _enderecoService.GetList(input);
     }
 
-    // GET localhost:444/enderecos/1445
-
     [HttpGet("{enderecoId:guid}")]
     public async Task<ActionResult<EnderecoOutput>> Get([FromRoute] Guid enderecoId)
     {

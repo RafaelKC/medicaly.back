@@ -1,4 +1,5 @@
-﻿using Postgrest.Interfaces;
+﻿using Medicaly.Infrastructure.Consts;
+using Postgrest.Interfaces;
 using Supabase;
 using Supabase.Functions.Interfaces;
 using Supabase.Gotrue;
@@ -14,11 +15,13 @@ namespace Medicaly.Infrastructure.Supabse;
 
 public interface ISupabseClient: ISupabaseClient<User, Session, RealtimeSocket, RealtimeChannel, Bucket, FileObject>
 {
-    
+    public IStorageFileApi<FileObject> AnexosStorage { get; }
 }
 
 public class SupabseClient: Client, ISupabseClient
 {
+    public IStorageFileApi<FileObject> AnexosStorage => Storage.From(AppConfig.SupabeseBucketName);
+
     public SupabseClient(IGotrueClient<User, Session> auth, IRealtimeClient<RealtimeSocket, RealtimeChannel> realtime, IFunctionsClient functions, IPostgrestClient postgrest, IStorageClient<Bucket, FileObject> storage, SupabaseOptions options) : base(auth, realtime, functions, postgrest, storage, options)
     {
     }
