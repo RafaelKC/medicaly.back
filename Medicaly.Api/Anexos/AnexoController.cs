@@ -44,7 +44,7 @@ public class AnexoController: ControllerBase
     [HttpDelete("{anexoId:guid}")]
     public async Task<ActionResult> Delete([FromRoute] Guid anexoId)
     {
-        var deletado = await _anexoService.Delete(anexoId);
+        var deletado = await _anexoCreateAndGetService.Delete(anexoId);
         return deletado ? Ok() : NotFound();
     }
 }

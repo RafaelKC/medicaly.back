@@ -12,6 +12,7 @@ public interface IAnexoCreateAndGetService
     public Task<AnexoCreatedOutput?> Create(AnexoInput input);
     public Task<PagedResult<AnexoComLinkOutput>> GetList(PagedFilteredInput input);
     public Task<AnexoComLinkOutput?> Get(Guid id);
+    public Task<bool> Delete(Guid anexoId);
 }
 
 public class AnexoCreateAndGetService: IAnexoCreateAndGetService, IAutoTransient
@@ -23,6 +24,17 @@ public class AnexoCreateAndGetService: IAnexoCreateAndGetService, IAutoTransient
     {
         _anexoService = anexoService;
         _supabseClient = supabseClient;
+    }
+
+    public async Task<bool> Delete(Guid anexoId)
+    {
+        var anexo = await _anexoService.Get(anexoId);
+        var anexoDeletado = await _anexoService.Delete(anexoId);
+
+        if (!anexoDeletado || anexo == null) return anexoDeletado;
+
+        await _supabseClient.AnexosStorage.Remove(anexo.BucketEndereco);
+        return true;
     }
 
     public async Task<AnexoCreatedOutput?> Create(AnexoInput input)
