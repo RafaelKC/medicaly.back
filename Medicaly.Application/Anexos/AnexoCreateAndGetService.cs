@@ -71,7 +71,7 @@ public class AnexoCreateAndGetService: IAnexoCreateAndGetService, IAutoTransient
         if (urlsResult != null)
         {
             urls = urlsResult
-                .Where(a => !string.IsNullOrWhiteSpace(a.Path) && string.IsNullOrWhiteSpace(a.SignedUrl))
+                .Where(a => !string.IsNullOrWhiteSpace(a.Path) && !string.IsNullOrWhiteSpace(a.SignedUrl))
                 .ToDictionary(a => a.Path, a => a.SignedUrl);
         }
 
