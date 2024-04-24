@@ -1,5 +1,6 @@
 ﻿using Medicaly.Domain.Administradores;
 using Medicaly.Domain.Agendamentos;
+using Medicaly.Domain.Anexos;
 using Medicaly.Domain.Procedimentos;
 using Medicaly.Domain.Enderecos;
 using Medicaly.Domain.Pacientes;
@@ -17,6 +18,7 @@ public class MedicalyDbContext: DbContext
     public DbSet<Profissional> Profissionais { get; set; }
     public DbSet<Procedimento> Procedimentos { get; set; }
     public DbSet<UnidadeAtendimento> UnidadeAtendimentos { get; set; }
+    public DbSet<Anexo> Anexos { get; set; }
 
     public MedicalyDbContext()
     {
