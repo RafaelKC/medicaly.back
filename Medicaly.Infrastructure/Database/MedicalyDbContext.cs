@@ -60,11 +60,6 @@ public class MedicalyDbContext: DbContext
                 .HasForeignKey(paciente => paciente.EnderecoId);
         });
 
-        modelBuilder.Entity<ProfissionalEspecialidade>(model =>
-        {
-            model.HasAlternateKey(pm => new { pm.ProfissionalId, pm.IdEspecialidade, });
-        });
-
         modelBuilder.Entity<Profissional>(profissionalModel =>
         {
             profissionalModel.HasIndex(profissional => profissional.Email).IsUnique();
@@ -82,12 +77,12 @@ public class MedicalyDbContext: DbContext
                 .UsingEntity<ProfissionalEspecialidade>(
                     l => l
                         .HasOne(e => e.Especialidade)
-                        .WithMany()
+                        .WithMany(e => e.ProfissionalEspecialidades)
                         .HasForeignKey(e => e.IdEspecialidade),
                     r => r
                         .HasOne(e => e.Profissional)
-                        .WithMany()
-                        .HasForeignKey(e => e.ProfissionalId));
+                        .WithMany(e => e.ProfissionalEspecialidades)
+                        .HasForeignKey(e => e.IdProsissional));
         });
 
         modelBuilder.Entity<Procedimento>(procedimentoModel =>

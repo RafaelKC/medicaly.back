@@ -7,6 +7,7 @@ public class Especialidade: Entity
 {
     public string Nome { get; set; }
     public ICollection<Profissional> Profissionais { get; set; }
+    public ICollection<ProfissionalEspecialidade> ProfissionalEspecialidades { get; set; }
 
     public Especialidade()
     {
