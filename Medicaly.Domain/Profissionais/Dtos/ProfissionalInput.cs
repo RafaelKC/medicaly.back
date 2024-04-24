@@ -37,7 +37,7 @@ public class ProfissionalInput: EntityDto, IUser
 
     public List<string> Atuacoes { get; set; }
 
-    public List<string> Especialidades { get; set; }
+    public List<Guid> EspecialidadesIds { get; set; }
 
     [Required]
     public TipoProfissional Tipo { get; set; }

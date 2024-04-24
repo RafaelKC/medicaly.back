@@ -3,6 +3,7 @@ using Medicaly.Domain.Agendamentos;
 using Medicaly.Domain.Anexos;
 using Medicaly.Domain.Procedimentos;
 using Medicaly.Domain.Enderecos;
+using Medicaly.Domain.Especialidades;
 using Medicaly.Domain.Pacientes;
 using Medicaly.Domain.Profissionais;
 using Medicaly.Domain.UnidadeAtendimento;
@@ -19,6 +20,8 @@ public class MedicalyDbContext: DbContext
     public DbSet<Procedimento> Procedimentos { get; set; }
     public DbSet<UnidadeAtendimento> UnidadeAtendimentos { get; set; }
     public DbSet<Anexo> Anexos { get; set; }
+    public DbSet<Especialidade> Especialidades { get; set; }
+    public DbSet<ProfissionalEspecialidade> ProfissionalEspecialidades { get; set; }
 
     public MedicalyDbContext()
     {
@@ -57,6 +60,11 @@ public class MedicalyDbContext: DbContext
                 .HasForeignKey(paciente => paciente.EnderecoId);
         });
 
+        modelBuilder.Entity<ProfissionalEspecialidade>(model =>
+        {
+            model.HasAlternateKey(pm => new { pm.ProfissionalId, pm.IdEspecialidade, });
+        });
+
         modelBuilder.Entity<Profissional>(profissionalModel =>
         {
             profissionalModel.HasIndex(profissional => profissional.Email).IsUnique();
@@ -67,6 +75,19 @@ public class MedicalyDbContext: DbContext
                 .HasOne<Endereco>()
                 .WithMany()
                 .HasForeignKey(profissional => profissional.EnderecoId);
+
+            profissionalModel
+                .HasMany(e => e.Especialidades)
+                .WithMany(e => e.Profissionais)
+                .UsingEntity<ProfissionalEspecialidade>(
+                    l => l
+                        .HasOne(e => e.Especialidade)
+                        .WithMany()
+                        .HasForeignKey(e => e.IdEspecialidade),
+                    r => r
+                        .HasOne(e => e.Profissional)
+                        .WithMany()
+                        .HasForeignKey(e => e.ProfissionalId));
         });
 
         modelBuilder.Entity<Procedimento>(procedimentoModel =>

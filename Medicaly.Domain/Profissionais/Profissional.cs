@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Medicaly.Domain.Communs;
+using Medicaly.Domain.Especialidades;
 using Medicaly.Domain.Profissionais.Dtos;
 using Medicaly.Domain.Profissionais.Enums;
 using Medicaly.Domain.Users;
@@ -39,8 +40,6 @@ public class Profissional: Entity, IUser
 
     public string Atuacoes { get; set; }
 
-    public string Especialidades { get; set; }
-
     [Required]
     public TipoProfissional Tipo { get; set; }
 
@@ -51,6 +50,9 @@ public class Profissional: Entity, IUser
     public TimeSpan FimExpediente { get; set; }
 
     public DayOfWeek[] DiasAtendidos { get; set; }
+
+    public ICollection<Especialidade> Especialidades { get; set; }
+    public ICollection<ProfissionalEspecialidade> ProfissionalEspecialidades { get; set; }
 
     public Profissional()
     {
@@ -69,7 +71,6 @@ public class Profissional: Entity, IUser
         Genero = input.Genero;
         CredencialDeSaude = input.CredencialDeSaude;
         Atuacoes = string.Join(",", input.Atuacoes);
-        Especialidades = string.Join(",", input.Especialidades);
         Tipo = input.Tipo;
         InicioExpediente = TimeSpan.FromMilliseconds(input.InicioExpediente);
         FimExpediente = TimeSpan.FromMilliseconds(input.FimExpediente);
@@ -87,7 +88,6 @@ public class Profissional: Entity, IUser
         Genero = input.Genero;
         CredencialDeSaude = input.CredencialDeSaude;
         Atuacoes = string.Join(",", input.Atuacoes);
-        Especialidades = string.Join(",", input.Especialidades);
         Tipo = input.Tipo;
         InicioExpediente = TimeSpan.FromMilliseconds(input.InicioExpediente);
         DiasAtendidos = input.DiasAtendidos;

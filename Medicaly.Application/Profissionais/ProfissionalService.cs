@@ -18,13 +18,13 @@ public interface IProfissionalService
     public Task<bool> Delete(Guid ProfissionalId);
 }
 
-public class AdministradorService: IProfissionalService, IAutoTransient
+public class ProfissionalService: IProfissionalService, IAutoTransient
 {
-    private readonly ILogger<AdministradorService> _logger;
+    private readonly ILogger<ProfissionalService> _logger;
     private readonly MedicalyDbContext _db;
     private DbSet<Profissional> _Profissionals => _db.Profissionais;
 
-    public AdministradorService(MedicalyDbContext db, ILogger<AdministradorService> logger)
+    public ProfissionalService(MedicalyDbContext db, ILogger<ProfissionalService> logger)
     {
         _db = db;
         _logger = logger;
@@ -52,11 +52,30 @@ public class AdministradorService: IProfissionalService, IAutoTransient
     {
         var query = _Profissionals
             .AsNoTracking()
+            .Include(p => p.Especialidades)
             .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), Profissional =>
                 Profissional.Nome.ToLower().Contains(input.Filter.ToLower())
                 || Profissional.Sobrenome.ToLower().Contains(input.Filter.ToLower())
             )
-            .Select(Profissional => new ProfissionalOutput(Profissional));
+            .Select(Profissional => new ProfissionalOutput
+            {
+                Id = Profissional.Id,
+                Nome = Profissional.Nome,
+                Sobrenome = Profissional.Sobrenome,
+                Cpf = Profissional.Cpf,
+                Email = Profissional.Email,
+                Telefone = Profissional.Telefone,
+                DataNascimento = Profissional.DataNascimento,
+                EnderecoId = Profissional.EnderecoId,
+                Genero = Profissional.Genero,
+                CredencialDeSaude = Profissional.CredencialDeSaude,
+                Atuacoes = string.IsNullOrWhiteSpace(Profissional.Atuacoes) ? new List<string>() : Profissional.Atuacoes.Split(",", StringSplitOptions.None).ToList(),
+                Tipo = Profissional.Tipo,
+                InicioExpediente = Profissional.InicioExpediente.TotalMilliseconds,
+                FimExpediente = Profissional.FimExpediente.TotalMilliseconds,
+                DiasAtendidos = Profissional.DiasAtendidos,
+                Especialidades = Profissional.Especialidades.ToList(),
+            });
 
         return await query.ToPagedResult(input);
     }
