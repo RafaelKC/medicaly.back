@@ -38,6 +38,13 @@ public class MedicalyDbContext: DbContext
         base.OnModelCreating(modelBuilder);
         modelBuilder.HasDefaultSchema("public");
 
+        modelBuilder.Entity<ProfissionalEspecialidade>(pm =>
+        {
+            pm
+                .HasIndex(p => new { p.IdEspecialidade, p.IdProsissional })
+                .IsUnique();
+        });
+
         modelBuilder.Entity<Administrador>(administradorModel =>
         {
             administradorModel.HasIndex(administrador => administrador.Email).IsUnique();

@@ -56,10 +56,11 @@ namespace Medicaly.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProfissionalEspecialidades_IdEspecialidade",
+                name: "IX_ProfissionalEspecialidades_IdEspecialidade_IdProsissional",
                 schema: "public",
                 table: "ProfissionalEspecialidades",
-                column: "IdEspecialidade");
+                columns: new[] { "IdEspecialidade", "IdProsissional" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProfissionalEspecialidades_IdProsissional",

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Medicaly.Infrastructure.Migrations
 {
     [DbContext(typeof(MedicalyDbContext))]
-    [Migration("20240424233853_AddEspecialidades")]
+    [Migration("20240424234620_AddEspecialidades")]
     partial class AddEspecialidades
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -345,9 +345,10 @@ namespace Medicaly.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdEspecialidade");
-
                     b.HasIndex("IdProsissional");
+
+                    b.HasIndex("IdEspecialidade", "IdProsissional")
+                        .IsUnique();
 
                     b.ToTable("ProfissionalEspecialidades", "public");
                 });

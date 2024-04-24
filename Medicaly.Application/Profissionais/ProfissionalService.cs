@@ -1,5 +1,6 @@
 ﻿using Medicaly.Application.Communs;
 using Medicaly.Application.Entensions;
+using Medicaly.Application.Profissionais;
 using Medicaly.Application.Transients;
 using Medicaly.Domain.Profissionais;
 using Medicaly.Domain.Profissionais.Dtos;
@@ -21,13 +22,15 @@ public interface IProfissionalService
 public class ProfissionalService: IProfissionalService, IAutoTransient
 {
     private readonly ILogger<ProfissionalService> _logger;
+    private readonly IProfissionalEspecialidadeService _profissionalEspecialidadeService;
     private readonly MedicalyDbContext _db;
     private DbSet<Profissional> _Profissionals => _db.Profissionais;
 
-    public ProfissionalService(MedicalyDbContext db, ILogger<ProfissionalService> logger)
+    public ProfissionalService(MedicalyDbContext db, ILogger<ProfissionalService> logger, IProfissionalEspecialidadeService profissionalEspecialidadeService)
     {
         _db = db;
         _logger = logger;
+        _profissionalEspecialidadeService = profissionalEspecialidadeService;
     }
 
     public async Task<ProfissionalOutput?> Get(Guid ProfissionalId)
@@ -87,6 +90,9 @@ public class ProfissionalService: IProfissionalService, IAutoTransient
             var Profissional = new Profissional(input);
             await _Profissionals.AddAsync(Profissional);
             await _db.SaveChangesAsync();
+
+            await _profissionalEspecialidadeService.UpdateEspecialidades(input.Id, input.EspecialidadesIds);
+
             return Profissional.Id;
         }
         catch (Exception e)
@@ -102,6 +108,9 @@ public class ProfissionalService: IProfissionalService, IAutoTransient
         if (Profissional == null) return false;
         Profissional.Update(input);
         await _db.SaveChangesAsync();
+
+        await _profissionalEspecialidadeService.UpdateEspecialidades(input.Id, input.EspecialidadesIds);
+
         return true;
     }
 

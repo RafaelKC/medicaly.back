@@ -343,9 +343,10 @@ namespace Medicaly.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdEspecialidade");
-
                     b.HasIndex("IdProsissional");
+
+                    b.HasIndex("IdEspecialidade", "IdProsissional")
+                        .IsUnique();
 
                     b.ToTable("ProfissionalEspecialidades", "public");
                 });
