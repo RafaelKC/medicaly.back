@@ -1,12 +1,14 @@
 ﻿using Medicaly.Application.Communs;
 using Medicaly.Application.Especialidades;
 using Medicaly.Domain.Especialidades.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medicaly.Api.Especialidades;
 
 
 [Route("especialidades")]
+[Authorize]
 public class EspecialidadeController: ControllerBase
 {
     private readonly IEspecialidadeService _especialidadeService;
@@ -17,12 +19,14 @@ public class EspecialidadeController: ControllerBase
     }
 
     [HttpGet]
+    [Authorize]
     public async Task<PagedResult<EspecialidadeModel>> GetlList([FromQuery] PagedFilteredInput input)
     {
         return await _especialidadeService.GetList(input);
     }
 
     [HttpGet("{especialidadeId:guid}")]
+    [Authorize]
     public async Task<ActionResult<EspecialidadeModel>> Get([FromRoute] Guid especialidadeId)
     {
         var especialidade = await _especialidadeService.Get(especialidadeId);
@@ -30,6 +34,7 @@ public class EspecialidadeController: ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<ActionResult> Create([FromBody] EspecialidadeModel input)
     {
         var especialidadeId = await _especialidadeService.Create(input);
@@ -37,6 +42,7 @@ public class EspecialidadeController: ControllerBase
     }
 
     [HttpPut("{especialidadeId:guid}")]
+    [Authorize]
     public async Task<ActionResult> Update([FromRoute] Guid especialidadeId, [FromBody] EspecialidadeModel input)
     {
         var atuaizado = await _especialidadeService.Update(especialidadeId, input);
@@ -44,6 +50,7 @@ public class EspecialidadeController: ControllerBase
     }
 
     [HttpDelete("{especialidadeId:guid}")]
+    [Authorize]
     public async Task<ActionResult> Delete([FromRoute] Guid especialidadeId)
     {
         var deletado = await _especialidadeService.Delete(especialidadeId);
