@@ -35,8 +35,31 @@ public class ProfissionalService: IProfissionalService, IAutoTransient
 
     public async Task<ProfissionalOutput?> Get(Guid ProfissionalId)
     {
-        var Profissional = await _Profissionals.AsNoTracking().FirstOrDefaultAsync(Profissional => Profissional.Id == ProfissionalId);
-        return Profissional != null ? new ProfissionalOutput(Profissional) : null;
+        var Profissional = await _Profissionals
+            .AsNoTracking()
+            .Include(p => p.Especialidades)
+            .Include(p => p.Atuacoes)
+            .Select(Profissional => new ProfissionalOutput
+            {
+                Id = Profissional.Id,
+                Nome = Profissional.Nome,
+                Sobrenome = Profissional.Sobrenome,
+                Cpf = Profissional.Cpf,
+                Email = Profissional.Email,
+                Telefone = Profissional.Telefone,
+                DataNascimento = Profissional.DataNascimento,
+                EnderecoId = Profissional.EnderecoId,
+                Genero = Profissional.Genero,
+                CredencialDeSaude = Profissional.CredencialDeSaude,
+                Tipo = Profissional.Tipo,
+                InicioExpediente = Profissional.InicioExpediente.TotalMilliseconds,
+                FimExpediente = Profissional.FimExpediente.TotalMilliseconds,
+                DiasAtendidos = Profissional.DiasAtendidos,
+                Especialidades = Profissional.Especialidades.ToList(),
+                Atuacoes = Profissional.Atuacoes.ToList(),
+            })
+            .FirstOrDefaultAsync(Profissional => Profissional.Id == ProfissionalId);
+        return Profissional ?? null;
     }
 
     public async Task<ProfissionalOutput?> GetByCpf(string ProfissionalCpf)
@@ -47,8 +70,32 @@ public class ProfissionalService: IProfissionalService, IAutoTransient
 
     public async Task<ProfissionalOutput?> GetByEmail(string ProfissionalEmail)
     {
-        var Profissional = await _Profissionals.AsNoTracking().FirstOrDefaultAsync(Profissional => Profissional.Email == ProfissionalEmail);
-        return Profissional != null ? new ProfissionalOutput(Profissional) : null;
+        var Profissional = await _Profissionals
+            .AsNoTracking()
+            .Include(p => p.Especialidades)
+            .Include(p => p.Atuacoes)
+            .Select(Profissional => new ProfissionalOutput
+                {
+                    Id = Profissional.Id,
+                    Nome = Profissional.Nome,
+                    Sobrenome = Profissional.Sobrenome,
+                    Cpf = Profissional.Cpf,
+                    Email = Profissional.Email,
+                    Telefone = Profissional.Telefone,
+                    DataNascimento = Profissional.DataNascimento,
+                    EnderecoId = Profissional.EnderecoId,
+                    Genero = Profissional.Genero,
+                    CredencialDeSaude = Profissional.CredencialDeSaude,
+                    Tipo = Profissional.Tipo,
+                    InicioExpediente = Profissional.InicioExpediente.TotalMilliseconds,
+                    FimExpediente = Profissional.FimExpediente.TotalMilliseconds,
+                    DiasAtendidos = Profissional.DiasAtendidos,
+                    Especialidades = Profissional.Especialidades.ToList(),
+                    Atuacoes = Profissional.Atuacoes.ToList(),
+                })
+            .FirstOrDefaultAsync(Profissional => Profissional.Email == ProfissionalEmail);
+
+        return Profissional ?? null;
     }
 
     public async Task<PagedResult<ProfissionalOutput>> GetList(PagedFilteredInput input)
