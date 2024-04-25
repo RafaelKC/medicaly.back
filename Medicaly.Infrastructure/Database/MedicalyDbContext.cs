@@ -3,6 +3,7 @@ using Medicaly.Domain.Agendamentos;
 using Medicaly.Domain.Anexos;
 using Medicaly.Domain.Procedimentos;
 using Medicaly.Domain.Enderecos;
+using Medicaly.Domain.Especialidades;
 using Medicaly.Domain.Pacientes;
 using Medicaly.Domain.Profissionais;
 using Medicaly.Domain.UnidadeAtendimento;
@@ -19,6 +20,9 @@ public class MedicalyDbContext: DbContext
     public DbSet<Procedimento> Procedimentos { get; set; }
     public DbSet<UnidadeAtendimento> UnidadeAtendimentos { get; set; }
     public DbSet<Anexo> Anexos { get; set; }
+    public DbSet<Especialidade> Especialidades { get; set; }
+    public DbSet<ProfissionalEspecialidade> ProfissionalEspecialidades { get; set; }
+    public DbSet<ProfissionalAtuacao> ProfissionalAtuacaos { get; set; }
 
     public MedicalyDbContext()
     {
@@ -34,6 +38,27 @@ public class MedicalyDbContext: DbContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.HasDefaultSchema("public");
+
+        modelBuilder.Entity<ProfissionalEspecialidade>(pm =>
+        {
+            pm
+                .HasIndex(p => new { p.IdEspecialidade, p.IdProsissional })
+                .IsUnique();
+        });
+
+        modelBuilder.Entity<ProfissionalAtuacao>(pm =>
+        {
+            pm
+                .HasIndex(p => new { p.IdEspecialidade, p.IdProsissional })
+                .IsUnique();
+        });
+
+        modelBuilder.Entity<Especialidade>(pm =>
+        {
+            pm
+                .HasIndex(p => new { p.Nome })
+                .IsUnique();
+        });
 
         modelBuilder.Entity<Administrador>(administradorModel =>
         {
@@ -67,6 +92,32 @@ public class MedicalyDbContext: DbContext
                 .HasOne<Endereco>()
                 .WithMany()
                 .HasForeignKey(profissional => profissional.EnderecoId);
+
+            profissionalModel
+                .HasMany(e => e.Especialidades)
+                .WithMany(e => e.Profissionais)
+                .UsingEntity<ProfissionalEspecialidade>(
+                    l => l
+                        .HasOne(e => e.Especialidade)
+                        .WithMany(e => e.ProfissionalEspecialidades)
+                        .HasForeignKey(e => e.IdEspecialidade),
+                    r => r
+                        .HasOne(e => e.Profissional)
+                        .WithMany(e => e.ProfissionalEspecialidades)
+                        .HasForeignKey(e => e.IdProsissional));
+
+            profissionalModel
+                .HasMany(e => e.Atuacoes)
+                .WithMany(e => e.ProfissionaisAtuacoes)
+                .UsingEntity<ProfissionalAtuacao>(
+                    l => l
+                        .HasOne(e => e.Especialidade)
+                        .WithMany(e => e.ProfissionalAtuacoes)
+                        .HasForeignKey(e => e.IdEspecialidade),
+                    r => r
+                        .HasOne(e => e.Profissional)
+                        .WithMany(e => e.ProfissionalAtuacoes)
+                        .HasForeignKey(e => e.IdProsissional));
         });
 
         modelBuilder.Entity<Procedimento>(procedimentoModel =>

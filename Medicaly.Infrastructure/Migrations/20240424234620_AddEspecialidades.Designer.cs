@@ -3,6 +3,7 @@ using System;
 using Medicaly.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Medicaly.Infrastructure.Migrations
 {
     [DbContext(typeof(MedicalyDbContext))]
-    partial class MedicalyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240424234620_AddEspecialidades")]
+    partial class AddEspecialidades
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -201,9 +203,6 @@ namespace Medicaly.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Nome")
-                        .IsUnique();
-
                     b.ToTable("Especialidades", "public");
                 });
 
@@ -263,6 +262,10 @@ namespace Medicaly.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<string>("Atuacoes")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Cpf")
                         .IsRequired()
@@ -326,28 +329,6 @@ namespace Medicaly.Infrastructure.Migrations
                     b.HasIndex("EnderecoId");
 
                     b.ToTable("Profissionais", "public");
-                });
-
-            modelBuilder.Entity("Medicaly.Domain.Profissionais.ProfissionalAtuacao", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("IdEspecialidade")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("IdProsissional")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdProsissional");
-
-                    b.HasIndex("IdEspecialidade", "IdProsissional")
-                        .IsUnique();
-
-                    b.ToTable("ProfissionalAtuacaos", "public");
                 });
 
             modelBuilder.Entity("Medicaly.Domain.Profissionais.ProfissionalEspecialidade", b =>
@@ -446,25 +427,6 @@ namespace Medicaly.Infrastructure.Migrations
                         .HasForeignKey("EnderecoId");
                 });
 
-            modelBuilder.Entity("Medicaly.Domain.Profissionais.ProfissionalAtuacao", b =>
-                {
-                    b.HasOne("Medicaly.Domain.Especialidades.Especialidade", "Especialidade")
-                        .WithMany("ProfissionalAtuacoes")
-                        .HasForeignKey("IdEspecialidade")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Medicaly.Domain.Profissionais.Profissional", "Profissional")
-                        .WithMany("ProfissionalAtuacoes")
-                        .HasForeignKey("IdProsissional")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Especialidade");
-
-                    b.Navigation("Profissional");
-                });
-
             modelBuilder.Entity("Medicaly.Domain.Profissionais.ProfissionalEspecialidade", b =>
                 {
                     b.HasOne("Medicaly.Domain.Especialidades.Especialidade", "Especialidade")
@@ -497,15 +459,11 @@ namespace Medicaly.Infrastructure.Migrations
 
             modelBuilder.Entity("Medicaly.Domain.Especialidades.Especialidade", b =>
                 {
-                    b.Navigation("ProfissionalAtuacoes");
-
                     b.Navigation("ProfissionalEspecialidades");
                 });
 
             modelBuilder.Entity("Medicaly.Domain.Profissionais.Profissional", b =>
                 {
-                    b.Navigation("ProfissionalAtuacoes");
-
                     b.Navigation("ProfissionalEspecialidades");
                 });
 #pragma warning restore 612, 618
