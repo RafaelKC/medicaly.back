@@ -22,6 +22,7 @@ public class MedicalyDbContext: DbContext
     public DbSet<Anexo> Anexos { get; set; }
     public DbSet<Especialidade> Especialidades { get; set; }
     public DbSet<ProfissionalEspecialidade> ProfissionalEspecialidades { get; set; }
+    public DbSet<ProfissionalAtuacao> ProfissionalAtuacaos { get; set; }
 
     public MedicalyDbContext()
     {
@@ -39,6 +40,13 @@ public class MedicalyDbContext: DbContext
         modelBuilder.HasDefaultSchema("public");
 
         modelBuilder.Entity<ProfissionalEspecialidade>(pm =>
+        {
+            pm
+                .HasIndex(p => new { p.IdEspecialidade, p.IdProsissional })
+                .IsUnique();
+        });
+
+        modelBuilder.Entity<ProfissionalAtuacao>(pm =>
         {
             pm
                 .HasIndex(p => new { p.IdEspecialidade, p.IdProsissional })
@@ -96,6 +104,19 @@ public class MedicalyDbContext: DbContext
                     r => r
                         .HasOne(e => e.Profissional)
                         .WithMany(e => e.ProfissionalEspecialidades)
+                        .HasForeignKey(e => e.IdProsissional));
+
+            profissionalModel
+                .HasMany(e => e.Atuacoes)
+                .WithMany(e => e.ProfissionaisAtuacoes)
+                .UsingEntity<ProfissionalAtuacao>(
+                    l => l
+                        .HasOne(e => e.Especialidade)
+                        .WithMany(e => e.ProfissionalAtuacoes)
+                        .HasForeignKey(e => e.IdEspecialidade),
+                    r => r
+                        .HasOne(e => e.Profissional)
+                        .WithMany(e => e.ProfissionalAtuacoes)
                         .HasForeignKey(e => e.IdProsissional));
         });
 

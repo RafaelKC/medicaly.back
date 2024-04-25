@@ -56,6 +56,7 @@ public class ProfissionalService: IProfissionalService, IAutoTransient
         var query = _Profissionals
             .AsNoTracking()
             .Include(p => p.Especialidades)
+            .Include(p => p.Atuacoes)
             .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), Profissional =>
                 Profissional.Nome.ToLower().Contains(input.Filter.ToLower())
                 || Profissional.Sobrenome.ToLower().Contains(input.Filter.ToLower())
@@ -72,12 +73,12 @@ public class ProfissionalService: IProfissionalService, IAutoTransient
                 EnderecoId = Profissional.EnderecoId,
                 Genero = Profissional.Genero,
                 CredencialDeSaude = Profissional.CredencialDeSaude,
-                Atuacoes = string.IsNullOrWhiteSpace(Profissional.Atuacoes) ? new List<string>() : Profissional.Atuacoes.Split(",", StringSplitOptions.None).ToList(),
                 Tipo = Profissional.Tipo,
                 InicioExpediente = Profissional.InicioExpediente.TotalMilliseconds,
                 FimExpediente = Profissional.FimExpediente.TotalMilliseconds,
                 DiasAtendidos = Profissional.DiasAtendidos,
                 Especialidades = Profissional.Especialidades.ToList(),
+                Atuacoes = Profissional.Atuacoes.ToList(),
             });
 
         return await query.ToPagedResult(input);
@@ -91,7 +92,7 @@ public class ProfissionalService: IProfissionalService, IAutoTransient
             await _Profissionals.AddAsync(Profissional);
             await _db.SaveChangesAsync();
 
-            await _profissionalEspecialidadeService.UpdateEspecialidades(input.Id, input.EspecialidadesIds);
+            await _profissionalEspecialidadeService.UpdateEspecialidadesEAtuacoes(input.Id, input.EspecialidadesIds, input.AtuacoesIds);
 
             return Profissional.Id;
         }
@@ -109,7 +110,7 @@ public class ProfissionalService: IProfissionalService, IAutoTransient
         Profissional.Update(input);
         await _db.SaveChangesAsync();
 
-        await _profissionalEspecialidadeService.UpdateEspecialidades(input.Id, input.EspecialidadesIds);
+        await _profissionalEspecialidadeService.UpdateEspecialidadesEAtuacoes(input.Id, input.EspecialidadesIds, input.AtuacoesIds);
 
         return true;
     }

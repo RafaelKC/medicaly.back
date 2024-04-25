@@ -7,8 +7,12 @@ namespace Medicaly.Domain.Especialidades;
 public class Especialidade: Entity
 {
     public string Nome { get; set; }
+
     public ICollection<Profissional> Profissionais { get; set; }
     public ICollection<ProfissionalEspecialidade> ProfissionalEspecialidades { get; set; }
+
+    public ICollection<Profissional> ProfissionaisAtuacoes { get; set; }
+    public ICollection<ProfissionalAtuacao> ProfissionalAtuacoes { get; set; }
 
     public Especialidade()
     {

@@ -38,8 +38,6 @@ public class Profissional: Entity, IUser
     [Required]
     public string CredencialDeSaude { get; set; }
 
-    public string Atuacoes { get; set; }
-
     [Required]
     public TipoProfissional Tipo { get; set; }
 
@@ -53,6 +51,9 @@ public class Profissional: Entity, IUser
 
     public ICollection<Especialidade> Especialidades { get; set; }
     public ICollection<ProfissionalEspecialidade> ProfissionalEspecialidades { get; set; }
+
+    public ICollection<Especialidade> Atuacoes { get; set; }
+    public ICollection<ProfissionalAtuacao> ProfissionalAtuacoes { get; set; }
 
     public Profissional()
     {
@@ -70,7 +71,6 @@ public class Profissional: Entity, IUser
         EnderecoId = input.EnderecoId;
         Genero = input.Genero;
         CredencialDeSaude = input.CredencialDeSaude;
-        Atuacoes = string.Join(",", input.Atuacoes);
         Tipo = input.Tipo;
         InicioExpediente = TimeSpan.FromMilliseconds(input.InicioExpediente);
         FimExpediente = TimeSpan.FromMilliseconds(input.FimExpediente);
@@ -87,7 +87,6 @@ public class Profissional: Entity, IUser
         EnderecoId = input.EnderecoId;
         Genero = input.Genero;
         CredencialDeSaude = input.CredencialDeSaude;
-        Atuacoes = string.Join(",", input.Atuacoes);
         Tipo = input.Tipo;
         InicioExpediente = TimeSpan.FromMilliseconds(input.InicioExpediente);
         DiasAtendidos = input.DiasAtendidos;
