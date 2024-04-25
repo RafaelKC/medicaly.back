@@ -3,6 +3,7 @@ using System;
 using Medicaly.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Medicaly.Infrastructure.Migrations
 {
     [DbContext(typeof(MedicalyDbContext))]
-    partial class MedicalyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240425000043_AddEspecialidades2")]
+    partial class AddEspecialidades2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

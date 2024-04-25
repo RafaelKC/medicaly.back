@@ -45,6 +45,13 @@ public class MedicalyDbContext: DbContext
                 .IsUnique();
         });
 
+        modelBuilder.Entity<Especialidade>(pm =>
+        {
+            pm
+                .HasIndex(p => new { p.Nome })
+                .IsUnique();
+        });
+
         modelBuilder.Entity<Administrador>(administradorModel =>
         {
             administradorModel.HasIndex(administrador => administrador.Email).IsUnique();
