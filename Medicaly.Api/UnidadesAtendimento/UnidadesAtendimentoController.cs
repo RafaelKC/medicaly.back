@@ -1,7 +1,7 @@
 ﻿using Medicaly.Application.Communs;
 using Medicaly.Application.UnidadesAtendimento;
 using Medicaly.Application.UnidadesAtendimento.Dtos;
-using Medicaly.Domain.UnidadeAtendimento.Dtos;
+using Medicaly.Domain.UnidadesAtendimentos.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medicaly.Api.UnidadesAtendimento;

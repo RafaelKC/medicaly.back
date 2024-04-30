@@ -3,6 +3,7 @@ using Medicaly.Domain.Communs;
 using Medicaly.Domain.Especialidades;
 using Medicaly.Domain.Profissionais.Dtos;
 using Medicaly.Domain.Profissionais.Enums;
+using Medicaly.Domain.UnidadesAtendimentos;
 using Medicaly.Domain.Users;
 using Medicaly.Domain.Users.Enums;
 
@@ -47,6 +48,11 @@ public class Profissional: Entity, IUser
     [Required]
     public TimeSpan FimExpediente { get; set; }
 
+    [Required]
+    public Guid UnidadeId { get; set; }
+
+    public UnidadeAtendimento Unidade { get; set; }
+
     public DayOfWeek[] DiasAtendidos { get; set; }
 
     public ICollection<Especialidade> Especialidades { get; set; }
@@ -75,6 +81,7 @@ public class Profissional: Entity, IUser
         InicioExpediente = TimeSpan.FromMilliseconds(input.InicioExpediente);
         FimExpediente = TimeSpan.FromMilliseconds(input.FimExpediente);
         DiasAtendidos = input.DiasAtendidos;
+        UnidadeId = input.UnidadeId;
     }
     
     public void Update(ProfissionalInput input)
@@ -91,5 +98,6 @@ public class Profissional: Entity, IUser
         InicioExpediente = TimeSpan.FromMilliseconds(input.InicioExpediente);
         DiasAtendidos = input.DiasAtendidos;
         FimExpediente = TimeSpan.FromMilliseconds(input.FimExpediente);
+        UnidadeId = input.UnidadeId;
     }
 }

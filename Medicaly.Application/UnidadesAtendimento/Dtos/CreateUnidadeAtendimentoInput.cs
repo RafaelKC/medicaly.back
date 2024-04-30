@@ -1,6 +1,6 @@
 ﻿using Medicaly.Domain.Enderecos;
 using Medicaly.Domain.Enderecos.Dtos;
-using Medicaly.Domain.UnidadeAtendimento.Dtos;
+using Medicaly.Domain.UnidadesAtendimentos.Dtos;
 
 namespace Medicaly.Application.UnidadesAtendimento.Dtos;
 

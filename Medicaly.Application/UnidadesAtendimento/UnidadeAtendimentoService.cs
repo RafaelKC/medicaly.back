@@ -1,8 +1,8 @@
 ﻿using Medicaly.Application.Communs;
 using Medicaly.Application.Entensions;
 using Medicaly.Application.Transients;
-using Medicaly.Domain.UnidadeAtendimento;
-using Medicaly.Domain.UnidadeAtendimento.Dtos;
+using Medicaly.Domain.UnidadesAtendimentos;
+using Medicaly.Domain.UnidadesAtendimentos.Dtos;
 using Medicaly.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
