@@ -312,6 +312,9 @@ namespace Medicaly.Infrastructure.Migrations
                     b.Property<int>("Tipo")
                         .HasColumnType("integer");
 
+                    b.Property<Guid>("UnidadeId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Cpf")
@@ -324,6 +327,8 @@ namespace Medicaly.Infrastructure.Migrations
                         .IsUnique();
 
                     b.HasIndex("EnderecoId");
+
+                    b.HasIndex("UnidadeId");
 
                     b.ToTable("Profissionais", "public");
                 });
@@ -372,7 +377,7 @@ namespace Medicaly.Infrastructure.Migrations
                     b.ToTable("ProfissionalEspecialidades", "public");
                 });
 
-            modelBuilder.Entity("Medicaly.Domain.UnidadeAtendimento.UnidadeAtendimento", b =>
+            modelBuilder.Entity("Medicaly.Domain.UnidadesAtendimentos.UnidadeAtendimento", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -417,7 +422,7 @@ namespace Medicaly.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Medicaly.Domain.UnidadeAtendimento.UnidadeAtendimento", null)
+                    b.HasOne("Medicaly.Domain.UnidadesAtendimentos.UnidadeAtendimento", null)
                         .WithMany()
                         .HasForeignKey("IdUnidadeAtendimento")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -444,6 +449,14 @@ namespace Medicaly.Infrastructure.Migrations
                     b.HasOne("Medicaly.Domain.Enderecos.Endereco", null)
                         .WithMany()
                         .HasForeignKey("EnderecoId");
+
+                    b.HasOne("Medicaly.Domain.UnidadesAtendimentos.UnidadeAtendimento", "Unidade")
+                        .WithMany()
+                        .HasForeignKey("UnidadeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Unidade");
                 });
 
             modelBuilder.Entity("Medicaly.Domain.Profissionais.ProfissionalAtuacao", b =>
@@ -484,7 +497,7 @@ namespace Medicaly.Infrastructure.Migrations
                     b.Navigation("Profissional");
                 });
 
-            modelBuilder.Entity("Medicaly.Domain.UnidadeAtendimento.UnidadeAtendimento", b =>
+            modelBuilder.Entity("Medicaly.Domain.UnidadesAtendimentos.UnidadeAtendimento", b =>
                 {
                     b.HasOne("Medicaly.Domain.Enderecos.Endereco", "Endereco")
                         .WithMany()

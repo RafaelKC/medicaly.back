@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Medicaly.Infrastructure.Migrations
 {
     [DbContext(typeof(MedicalyDbContext))]
-    [Migration("20240413044309_UnidadeAtendimentoEntity")]
-    partial class UnidadeAtendimentoEntity
+    [Migration("20240430225139_AdicionandoEntidades")]
+    partial class AdicionandoEntidades
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -75,7 +75,7 @@ namespace Medicaly.Infrastructure.Migrations
                     b.ToTable("Administradores", "public");
                 });
 
-            modelBuilder.Entity("Medicaly.Domain.Agendamentos.Agendamento", b =>
+            modelBuilder.Entity("Medicaly.Domain.Agendamentos.Procedimento", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -94,7 +94,7 @@ namespace Medicaly.Infrastructure.Migrations
                     b.Property<Guid>("IdProfissional")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("IdUnicadeAtendimento")
+                    b.Property<Guid>("IdUnidadeAtendimento")
                         .HasColumnType("uuid");
 
                     b.Property<int>("Status")
@@ -109,7 +109,38 @@ namespace Medicaly.Infrastructure.Migrations
 
                     b.HasIndex("IdProfissional");
 
-                    b.ToTable("Agendamentos", "public");
+                    b.HasIndex("IdUnidadeAtendimento");
+
+                    b.ToTable("Procedimentos", "public");
+                });
+
+            modelBuilder.Entity("Medicaly.Domain.Anexos.Anexo", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("BucketEndereco")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("BucketPrefix")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("DataUltimaModificacao")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Extencao")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Anexos", "public");
                 });
 
             modelBuilder.Entity("Medicaly.Domain.Enderecos.Endereco", b =>
@@ -158,6 +189,24 @@ namespace Medicaly.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Enderecos", "public");
+                });
+
+            modelBuilder.Entity("Medicaly.Domain.Especialidades.Especialidade", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Nome")
+                        .IsUnique();
+
+                    b.ToTable("Especialidades", "public");
                 });
 
             modelBuilder.Entity("Medicaly.Domain.Pacientes.Paciente", b =>
@@ -217,10 +266,6 @@ namespace Medicaly.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Atuacoes")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("Cpf")
                         .IsRequired()
                         .HasMaxLength(11)
@@ -233,6 +278,10 @@ namespace Medicaly.Infrastructure.Migrations
                     b.Property<DateTime>("DataNascimento")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int[]>("DiasAtendidos")
+                        .IsRequired()
+                        .HasColumnType("integer[]");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text");
@@ -240,11 +289,7 @@ namespace Medicaly.Infrastructure.Migrations
                     b.Property<Guid?>("EnderecoId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Especialidades")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<TimeSpan>("FimExpedienteExpediente")
+                    b.Property<TimeSpan>("FimExpediente")
                         .HasColumnType("interval");
 
                     b.Property<int>("Genero")
@@ -269,6 +314,9 @@ namespace Medicaly.Infrastructure.Migrations
                     b.Property<int>("Tipo")
                         .HasColumnType("integer");
 
+                    b.Property<Guid>("UnidadeId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Cpf")
@@ -282,10 +330,56 @@ namespace Medicaly.Infrastructure.Migrations
 
                     b.HasIndex("EnderecoId");
 
+                    b.HasIndex("UnidadeId");
+
                     b.ToTable("Profissionais", "public");
                 });
 
-            modelBuilder.Entity("Medicaly.Domain.UnidadeAtendimento.UnidadeAtendimento", b =>
+            modelBuilder.Entity("Medicaly.Domain.Profissionais.ProfissionalAtuacao", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("IdEspecialidade")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("IdProsissional")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdProsissional");
+
+                    b.HasIndex("IdEspecialidade", "IdProsissional")
+                        .IsUnique();
+
+                    b.ToTable("ProfissionalAtuacaos", "public");
+                });
+
+            modelBuilder.Entity("Medicaly.Domain.Profissionais.ProfissionalEspecialidade", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("IdEspecialidade")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("IdProsissional")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdProsissional");
+
+                    b.HasIndex("IdEspecialidade", "IdProsissional")
+                        .IsUnique();
+
+                    b.ToTable("ProfissionalEspecialidades", "public");
+                });
+
+            modelBuilder.Entity("Medicaly.Domain.UnidadesAtendimentos.UnidadeAtendimento", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -316,7 +410,7 @@ namespace Medicaly.Infrastructure.Migrations
                         .HasForeignKey("EnderecoId");
                 });
 
-            modelBuilder.Entity("Medicaly.Domain.Agendamentos.Agendamento", b =>
+            modelBuilder.Entity("Medicaly.Domain.Agendamentos.Procedimento", b =>
                 {
                     b.HasOne("Medicaly.Domain.Pacientes.Paciente", "Paciente")
                         .WithMany()
@@ -327,6 +421,12 @@ namespace Medicaly.Infrastructure.Migrations
                     b.HasOne("Medicaly.Domain.Profissionais.Profissional", "Profissional")
                         .WithMany()
                         .HasForeignKey("IdProfissional")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Medicaly.Domain.UnidadesAtendimentos.UnidadeAtendimento", null)
+                        .WithMany()
+                        .HasForeignKey("IdUnidadeAtendimento")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -351,9 +451,55 @@ namespace Medicaly.Infrastructure.Migrations
                     b.HasOne("Medicaly.Domain.Enderecos.Endereco", null)
                         .WithMany()
                         .HasForeignKey("EnderecoId");
+
+                    b.HasOne("Medicaly.Domain.UnidadesAtendimentos.UnidadeAtendimento", "Unidade")
+                        .WithMany()
+                        .HasForeignKey("UnidadeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Unidade");
                 });
 
-            modelBuilder.Entity("Medicaly.Domain.UnidadeAtendimento.UnidadeAtendimento", b =>
+            modelBuilder.Entity("Medicaly.Domain.Profissionais.ProfissionalAtuacao", b =>
+                {
+                    b.HasOne("Medicaly.Domain.Especialidades.Especialidade", "Especialidade")
+                        .WithMany("ProfissionalAtuacoes")
+                        .HasForeignKey("IdEspecialidade")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Medicaly.Domain.Profissionais.Profissional", "Profissional")
+                        .WithMany("ProfissionalAtuacoes")
+                        .HasForeignKey("IdProsissional")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Especialidade");
+
+                    b.Navigation("Profissional");
+                });
+
+            modelBuilder.Entity("Medicaly.Domain.Profissionais.ProfissionalEspecialidade", b =>
+                {
+                    b.HasOne("Medicaly.Domain.Especialidades.Especialidade", "Especialidade")
+                        .WithMany("ProfissionalEspecialidades")
+                        .HasForeignKey("IdEspecialidade")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Medicaly.Domain.Profissionais.Profissional", "Profissional")
+                        .WithMany("ProfissionalEspecialidades")
+                        .HasForeignKey("IdProsissional")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Especialidade");
+
+                    b.Navigation("Profissional");
+                });
+
+            modelBuilder.Entity("Medicaly.Domain.UnidadesAtendimentos.UnidadeAtendimento", b =>
                 {
                     b.HasOne("Medicaly.Domain.Enderecos.Endereco", "Endereco")
                         .WithMany()
@@ -362,6 +508,20 @@ namespace Medicaly.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Endereco");
+                });
+
+            modelBuilder.Entity("Medicaly.Domain.Especialidades.Especialidade", b =>
+                {
+                    b.Navigation("ProfissionalAtuacoes");
+
+                    b.Navigation("ProfissionalEspecialidades");
+                });
+
+            modelBuilder.Entity("Medicaly.Domain.Profissionais.Profissional", b =>
+                {
+                    b.Navigation("ProfissionalAtuacoes");
+
+                    b.Navigation("ProfissionalEspecialidades");
                 });
 #pragma warning restore 612, 618
         }

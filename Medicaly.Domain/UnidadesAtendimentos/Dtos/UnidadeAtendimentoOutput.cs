@@ -1,9 +1,8 @@
 ﻿using Medicaly.Domain.Communs;
 using Medicaly.Domain.Enderecos;
-using Medicaly.Domain.Profissionais.Dtos;
-using Medicaly.Domain.UnidadeAtendimento.Enums;
+using Medicaly.Domain.UnidadesAtendimentos.Enums;
 
-namespace Medicaly.Domain.UnidadeAtendimento.Dtos;
+namespace Medicaly.Domain.UnidadesAtendimentos.Dtos;
 
 public class UnidadeAtendimentoOutput: EntityDto
 {

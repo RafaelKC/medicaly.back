@@ -1,4 +1,4 @@
-﻿namespace Medicaly.Domain.UnidadeAtendimento.Enums;
+﻿namespace Medicaly.Domain.UnidadesAtendimentos.Enums;
 
 public enum TipoUnidade
 {

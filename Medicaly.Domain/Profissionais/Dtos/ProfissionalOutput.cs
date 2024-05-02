@@ -2,6 +2,7 @@
 using Medicaly.Domain.Especialidades;
 using Medicaly.Domain.Pacientes;
 using Medicaly.Domain.Profissionais.Enums;
+using Medicaly.Domain.UnidadesAtendimentos;
 using Medicaly.Domain.Users;
 using Medicaly.Domain.Users.Enums;
 
@@ -24,6 +25,8 @@ public class ProfissionalOutput: EntityDto, IUser
     public double FimExpediente { get; set; }
     public DayOfWeek[] DiasAtendidos { get; set; }
     public List<Especialidade> Especialidades { get; set; }
+    public Guid UnidadeId { get; set; }
+    public UnidadeAtendimento Unidade { get; set; }
 
     public ProfissionalOutput()
     {
@@ -46,5 +49,7 @@ public class ProfissionalOutput: EntityDto, IUser
         InicioExpediente = input.InicioExpediente.TotalMilliseconds;
         FimExpediente = input.FimExpediente.TotalMilliseconds;
         DiasAtendidos = input.DiasAtendidos;
+        UnidadeId = input.UnidadeId;
+        Unidade = input.Unidade;
     }
 }

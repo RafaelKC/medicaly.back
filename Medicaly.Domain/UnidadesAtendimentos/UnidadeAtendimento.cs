@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Medicaly.Domain.Communs;
 using Medicaly.Domain.Enderecos;
-using Medicaly.Domain.UnidadeAtendimento.Dtos;
-using Medicaly.Domain.UnidadeAtendimento.Enums;
-using Newtonsoft.Json;
+using Medicaly.Domain.UnidadesAtendimentos.Dtos;
+using Medicaly.Domain.UnidadesAtendimentos.Enums;
 
-namespace Medicaly.Domain.UnidadeAtendimento;
+namespace Medicaly.Domain.UnidadesAtendimentos;
 
 public class UnidadeAtendimento : Entity
 {

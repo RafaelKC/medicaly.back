@@ -50,4 +50,7 @@ public class ProfissionalInput: EntityDto, IUser
 
     [Required]
     public DayOfWeek[] DiasAtendidos { get; set; }
+
+    [Required]
+    public Guid UnidadeId { get; set; }
 }

@@ -6,7 +6,7 @@ using Medicaly.Domain.Enderecos;
 using Medicaly.Domain.Especialidades;
 using Medicaly.Domain.Pacientes;
 using Medicaly.Domain.Profissionais;
-using Medicaly.Domain.UnidadeAtendimento;
+using Medicaly.Domain.UnidadesAtendimentos;
 using Microsoft.EntityFrameworkCore;
 
 namespace Medicaly.Infrastructure.Database;
@@ -118,6 +118,11 @@ public class MedicalyDbContext: DbContext
                         .HasOne(e => e.Profissional)
                         .WithMany(e => e.ProfissionalAtuacoes)
                         .HasForeignKey(e => e.IdProsissional));
+
+            profissionalModel
+                .HasOne(e => e.Unidade)
+                .WithMany()
+                .HasForeignKey(e => e.UnidadeId);
         });
 
         modelBuilder.Entity<Procedimento>(procedimentoModel =>

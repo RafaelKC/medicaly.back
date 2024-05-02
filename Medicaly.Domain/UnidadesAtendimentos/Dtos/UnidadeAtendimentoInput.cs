@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Medicaly.Domain.Communs;
-using Medicaly.Domain.UnidadeAtendimento.Enums;
+using Medicaly.Domain.UnidadesAtendimentos.Enums;
 
-namespace Medicaly.Domain.UnidadeAtendimento.Dtos;
+namespace Medicaly.Domain.UnidadesAtendimentos.Dtos;
 
 public class UnidadeAtendimentoInput: EntityDto
 {
