@@ -7,7 +7,7 @@ using Medicaly.Domain.Procedimentos.Dtos;
 using Medicaly.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace Medicaly.Application.UnidadesAtendimento;
+namespace Medicaly.Application.Procedimentos;
 
 public interface IProcedimentoService
 {

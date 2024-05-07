@@ -1,6 +1,6 @@
 ﻿using Medicaly.Application.Administradores;
 using Medicaly.Application.Pacientes;
-using Medicaly.Application.Profissionals;
+using Medicaly.Application.Profissionais;
 using Medicaly.Application.Transients;
 using Medicaly.Domain.Users.Enums;
 using Medicaly.Infrastructure.Authentication;

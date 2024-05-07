@@ -1,6 +1,5 @@
 ﻿using Medicaly.Application.Enrecos;
 using Medicaly.Application.Profissionais.Dtos;
-using Medicaly.Application.Profissionals;
 using Medicaly.Application.Transients;
 using Medicaly.Domain.Users;
 using Medicaly.Domain.Users.Enums;

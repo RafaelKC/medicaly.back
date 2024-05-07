@@ -1,4 +1,5 @@
 ﻿using Medicaly.Application.Communs;
+using Medicaly.Application.Procedimentos;
 using Medicaly.Application.UnidadesAtendimento;
 using Medicaly.Domain.Agendamentos.Dtos;
 using Medicaly.Domain.Procedimentos.Dtos;

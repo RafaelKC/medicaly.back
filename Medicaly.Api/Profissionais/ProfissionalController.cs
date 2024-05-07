@@ -1,7 +1,6 @@
 ﻿using Medicaly.Application.Communs;
 using Medicaly.Application.Profissionais;
 using Medicaly.Application.Profissionais.Dtos;
-using Medicaly.Application.Profissionals;
 using Medicaly.Domain.Profissionais.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

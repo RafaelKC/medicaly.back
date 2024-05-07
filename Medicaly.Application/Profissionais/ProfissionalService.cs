@@ -1,13 +1,12 @@
 ﻿using Medicaly.Application.Communs;
 using Medicaly.Application.Entensions;
-using Medicaly.Application.Profissionais;
 using Medicaly.Application.Transients;
 using Medicaly.Domain.Profissionais;
 using Medicaly.Domain.Profissionais.Dtos;
 using Medicaly.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace Medicaly.Application.Profissionals;
+namespace Medicaly.Application.Profissionais;
 
 public interface IProfissionalService
 {
@@ -55,6 +54,7 @@ public class ProfissionalService: IProfissionalService, IAutoTransient
                 InicioExpediente = Profissional.InicioExpediente.TotalMilliseconds,
                 FimExpediente = Profissional.FimExpediente.TotalMilliseconds,
                 DiasAtendidos = Profissional.DiasAtendidos,
+                UnidadeId = Profissional.UnidadeId,
                 Especialidades = Profissional.Especialidades.ToList(),
                 Atuacoes = Profissional.Atuacoes.ToList(),
             })
