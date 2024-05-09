@@ -1,5 +1,6 @@
 ﻿using Medicaly.Application.Communs;
 using Medicaly.Application.Entensions;
+using Medicaly.Application.Procedimentos.Dtos;
 using Medicaly.Application.Transients;
 using Medicaly.Domain.Agendamentos;
 using Medicaly.Domain.Agendamentos.Dtos;
@@ -12,7 +13,7 @@ namespace Medicaly.Application.Procedimentos;
 public interface IProcedimentoService
 {
     public Task<ProcedimentoOutput?> Get(Guid procedimentoId);
-    public Task<PagedResult<ProcedimentoOutput>> GetList(PagedFilteredInput input);
+    public Task<PagedResult<ProcedimentoOutput>> GetList(GetListProcedimentoInput input);
     public Task<Guid?> Create(ProcedimentoInput input);
     public Task<bool> Update(Guid procedimentoId, ProcedimentoInput input);
     public Task<bool> Delete(Guid procedimentoId);
@@ -38,10 +39,10 @@ public class ProcedimentoService: IProcedimentoService, IAutoTransient
         return procedimento != null ? new ProcedimentoOutput(procedimento) : null;
     }
 
-    public async Task<PagedResult<ProcedimentoOutput>> GetList(PagedFilteredInput input)
+    public async Task<PagedResult<ProcedimentoOutput>> GetList(GetListProcedimentoInput input)
     {
         var query = _procedimento
-            .AsNoTracking()
+            .AsNoTracking().WhereIf(input.ProfissionalId.HasValue, a => input.ProfissionalId.Value==a.IdProfissional)
             .Select(procedimento => new ProcedimentoOutput(procedimento));
 
         return await query.ToPagedResult(input);

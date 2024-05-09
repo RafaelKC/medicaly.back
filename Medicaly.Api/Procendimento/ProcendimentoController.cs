@@ -1,5 +1,6 @@
 ﻿using Medicaly.Application.Communs;
 using Medicaly.Application.Procedimentos;
+using Medicaly.Application.Procedimentos.Dtos;
 using Medicaly.Application.UnidadesAtendimento;
 using Medicaly.Domain.Agendamentos.Dtos;
 using Medicaly.Domain.Procedimentos.Dtos;
@@ -20,7 +21,7 @@ public class ProcedimentoController: ControllerBase
     }
 
     [HttpGet]
-    public async Task<PagedResult<ProcedimentoOutput>> GetlList([FromQuery] PagedFilteredInput input)
+    public async Task<PagedResult<ProcedimentoOutput>> GetlList([FromQuery] GetListProcedimentoInput input)
     {
         return await _procedimento.GetList(input);
     }
