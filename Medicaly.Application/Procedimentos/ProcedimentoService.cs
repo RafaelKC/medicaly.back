@@ -42,7 +42,8 @@ public class ProcedimentoService: IProcedimentoService, IAutoTransient
     public async Task<PagedResult<ProcedimentoOutput>> GetList(GetListProcedimentoInput input)
     {
         var query = _procedimento
-            .AsNoTracking().WhereIf(input.ProfissionalId.HasValue, a => input.ProfissionalId.Value==a.IdProfissional)
+            .AsNoTracking()
+            .WhereIf(input.ProfissionalId.HasValue, a => input.ProfissionalId.Value==a.IdProfissional)
             .Select(procedimento => new ProcedimentoOutput(procedimento));
 
         return await query.ToPagedResult(input);
