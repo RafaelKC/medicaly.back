@@ -44,7 +44,21 @@ public class ProcedimentoService: IProcedimentoService, IAutoTransient
         var query = _procedimento
             .AsNoTracking()
             .WhereIf(input.ProfissionalId.HasValue, a => input.ProfissionalId.Value==a.IdProfissional)
-            .Select(procedimento => new ProcedimentoOutput(procedimento));
+            .Include(procedimento => procedimento.Profissional)
+            .Include(procedimento => procedimento.Paciente)
+            .Select(procedimento => new ProcedimentoOutput
+            {
+                Id = procedimento.Id,
+                TipoProcedimento = procedimento.TipoProcedimento,
+                CodigoTuss = procedimento.CodigoTuss,
+                Status = procedimento.Status,
+                Data = procedimento.Data,
+                IdPaciente = procedimento.IdPaciente,
+                IdProfissional = procedimento.IdProfissional,
+                IdUnidadeAtendimento = procedimento.IdUnidadeAtendimento,
+                Profissional = procedimento.Profissional,
+                Paciente = procedimento.Paciente,
+            });
 
         return await query.ToPagedResult(input);
     }
