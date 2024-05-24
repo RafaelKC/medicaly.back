@@ -44,21 +44,24 @@ public class ProcedimentoService: IProcedimentoService, IAutoTransient
         var query = _procedimento
             .AsNoTracking()
             .WhereIf(input.ProfissionalId.HasValue, a => input.ProfissionalId.Value==a.IdProfissional)
-            .Include(procedimento => procedimento.Profissional)
+            .WhereIf(input.PacienteId.HasValue, a => input.PacienteId.Value == a.IdPaciente)
             .Include(procedimento => procedimento.Paciente)
-            .Select(procedimento => new ProcedimentoOutput
-            {
-                Id = procedimento.Id,
-                TipoProcedimento = procedimento.TipoProcedimento,
-                CodigoTuss = procedimento.CodigoTuss,
-                Status = procedimento.Status,
-                Data = procedimento.Data,
-                IdPaciente = procedimento.IdPaciente,
-                IdProfissional = procedimento.IdProfissional,
-                IdUnidadeAtendimento = procedimento.IdUnidadeAtendimento,
-                Profissional = procedimento.Profissional,
-                Paciente = procedimento.Paciente,
-            });
+            .Include(procedimento => procedimento.Profissional)
+            .Include(procedimento => procedimento.UnidadeAtendimento)
+            .Select(procedimento => new ProcedimentoOutput(procedimento)
+                 {
+                    Id = procedimento.Id,
+                    TipoProcedimento = procedimento.TipoProcedimento,
+                    CodigoTuss = procedimento.CodigoTuss,
+                    Status = procedimento.Status,
+                    Data = procedimento.Data,
+                    IdPaciente = procedimento.IdPaciente,
+                    IdProfissional = procedimento.IdProfissional,
+                    IdUnidadeAtendimento = procedimento.IdUnidadeAtendimento,
+                    Profissional = procedimento.Profissional,
+                    Paciente = procedimento.Paciente,
+                    UnidadeAtendimento = procedimento.UnidadeAtendimento
+                });
 
         return await query.ToPagedResult(input);
     }

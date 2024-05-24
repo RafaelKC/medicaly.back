@@ -21,7 +21,7 @@ public class ProcedimentoController: ControllerBase
     }
 
     [HttpGet]
-    public async Task<PagedResult<ProcedimentoOutput>> GetlList([FromQuery] GetListProcedimentoInput input)
+    public async Task<PagedResult<ProcedimentoOutput>> GetList([FromQuery] GetListProcedimentoInput input)
     {
         return await _procedimento.GetList(input);
     }

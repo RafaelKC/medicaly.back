@@ -4,11 +4,12 @@ using Medicaly.Domain.Agendamentos.Dtos;
 using Medicaly.Domain.Communs;
 using Medicaly.Domain.Pacientes;
 using Medicaly.Domain.Profissionais;
+using Medicaly.Domain.ResultadoAnexos;
+using Medicaly.Domain.UnidadesAtendimentos;
 
 namespace Medicaly.Domain.Agendamentos;
 
-public class Procedimento: Entity
-{
+public class Procedimento: Entity {
     public TipoProcedimento TipoProcedimento { get; set; }
 
     public Status Status { get; set; }
@@ -33,6 +34,8 @@ public class Procedimento: Entity
 
     public Guid IdUnidadeAtendimento { get; set; }
 
+    public UnidadeAtendimento UnidadeAtendimento { get; set; }
+    
 
 
     public Procedimento() {

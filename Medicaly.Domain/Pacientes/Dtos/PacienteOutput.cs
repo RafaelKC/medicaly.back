@@ -10,6 +10,8 @@ public class PacienteOutput: EntityDto, IUser
 {
     public string Nome { get; set; }
     public string Sobrenome { get; set; }
+    
+    public string NomeDoCachorro { get; set; }
     public string Cpf { get; set; }
     public string Email { get; set; }
     public string Telefone { get; set; }
@@ -22,6 +24,7 @@ public class PacienteOutput: EntityDto, IUser
         Id = input.Id;
         Nome = input.Nome;
         Sobrenome = input.Sobrenome;
+        NomeDoCachorro = input.NomeDoCachorro;
         Cpf = input.Cpf;
         Email = input.Email;
         Telefone = input.Telefone;

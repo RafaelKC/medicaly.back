@@ -14,6 +14,8 @@ public class Paciente: Entity, IUser
 
     [Required]
     public string Sobrenome { get; set; }
+    
+    public string NomeDoCachorro { get; set; }
 
     [MaxLength(11)]
     [MinLength(11)]
@@ -44,6 +46,7 @@ public class Paciente: Entity, IUser
         Id = input.Id != Guid.Empty ?  input.Id : Guid.NewGuid();
         Nome = input.Nome;
         Sobrenome = input.Sobrenome;
+        NomeDoCachorro = input.NomeDoCachorro;
         Cpf = input.Cpf;
         Email = input.Email;
         Telefone = input.Telefone;
@@ -56,6 +59,7 @@ public class Paciente: Entity, IUser
     {
         Nome = input.Nome;
         Sobrenome = input.Sobrenome;
+        NomeDoCachorro = input.NomeDoCachorro;
         Email = input.Email;
         Telefone = input.Telefone;
         DataNascimento = input.DataNascimento;

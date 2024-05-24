@@ -3,6 +3,8 @@ using Medicaly.Domain.Agendamentos;
 using Medicaly.Domain.Communs;
 using Medicaly.Domain.Pacientes;
 using Medicaly.Domain.Profissionais;
+using Medicaly.Domain.UnidadesAtendimentos;
+
 
 namespace Medicaly.Domain.Procedimentos.Dtos;
 
@@ -14,7 +16,10 @@ public class ProcedimentoOutput : EntityDto
     public Paciente Paciente { get; set; }
     public Profissional Profissional { get; set; }
     public DateTime Data { get; set; }
+    
+    public UnidadeAtendimento UnidadeAtendimento { get; set; }
     public Guid IdPaciente { get; set; }
+    
     public Guid IdProfissional { get; set; }
     public Guid IdUnidadeAtendimento { get; set; }
 
