@@ -29,6 +29,8 @@ public class MedicalyDbContext: DbContext
     public DbSet<ProfissionalAtuacao> ProfissionalAtuacaos { get; set; }
     
     public DbSet<Resultado> Resultados { get; set; }
+    
+    public DbSet<ResultadoAnexo> ResultadoAnexos { get; set; }
 
     public MedicalyDbContext()
     {
