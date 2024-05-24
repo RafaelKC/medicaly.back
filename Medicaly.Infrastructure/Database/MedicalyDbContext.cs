@@ -6,9 +6,12 @@ using Medicaly.Domain.Enderecos;
 using Medicaly.Domain.Especialidades;
 using Medicaly.Domain.Pacientes;
 using Medicaly.Domain.Profissionais;
+using Medicaly.Domain.ResultadoAnexos;
 using Medicaly.Domain.Resultados;
+using Medicaly.Domain.Resultados.Dtos;
 using Medicaly.Domain.UnidadesAtendimentos;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Medicaly.Infrastructure.Database;
 
@@ -139,7 +142,6 @@ public class MedicalyDbContext: DbContext
                 procedimentoModel.HasOne(a => a.UnidadeAtendimento).WithMany()
                     .HasForeignKey(a => a.IdUnidadeAtendimento);
                 
-                procedimentoModel.HasOne(a => a.)
 
 
             }
@@ -156,11 +158,22 @@ public class MedicalyDbContext: DbContext
         modelBuilder.Entity<Resultado>(ResultadoModel =>
         {
             ResultadoModel.HasKey(a => a.ProcedimentoId);
-           
-
         });
 
+        modelBuilder.Entity<ResultadoAnexo>(ResultadoAnexoModel =>
+        {
+            ResultadoAnexoModel.HasKey(a => new { a.AnexoId, a.ProcedimentoId });
+            ResultadoAnexoModel.HasOne(a => a.Anexo)
+                .WithOne(a => a.ResultadoAnexos).HasPrincipalKey<Anexo>(a => a.Id)
+                .HasForeignKey<ResultadoAnexo>(a => a.AnexoId);
+            ResultadoAnexoModel.HasOne(a => a.Resultado)
+                .WithOne(a => a.ResultadoAnexo).HasPrincipalKey<Resultado>(a => a.ProcedimentoId)
+                .HasForeignKey<ResultadoAnexo>(a => a.ProcedimentoId);
+
+        });
     }
+    
+    
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
