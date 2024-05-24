@@ -38,6 +38,7 @@ public class ProfissionalService: IProfissionalService, IAutoTransient
             .AsNoTracking()
             .Include(p => p.Especialidades)
             .Include(p => p.Atuacoes)
+            .Include(p => p.Unidade)
             .Select(Profissional => new ProfissionalOutput
             {
                 Id = Profissional.Id,
@@ -55,6 +56,7 @@ public class ProfissionalService: IProfissionalService, IAutoTransient
                 FimExpediente = Profissional.FimExpediente.TotalMilliseconds,
                 DiasAtendidos = Profissional.DiasAtendidos,
                 UnidadeId = Profissional.UnidadeId,
+                Unidade = Profissional.Unidade,
                 Especialidades = Profissional.Especialidades.ToList(),
                 Atuacoes = Profissional.Atuacoes.ToList(),
             })
