@@ -1,6 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using Medicaly.Domain.Anexos.Dtos;
 using Medicaly.Domain.Communs;
+using Medicaly.Domain.ResultadoAnexos;
 
 namespace Medicaly.Domain.Anexos;
 
@@ -11,6 +12,8 @@ public class Anexo: Entity
     public string Extencao { get; set; }
     public string Nome { get; set; }
     public Guid BucketPrefix { get; set; }
+    
+    public ResultadoAnexo ResultadoAnexos { get; set; }
 
     public Anexo()
     {

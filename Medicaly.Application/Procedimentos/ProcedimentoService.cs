@@ -1,5 +1,6 @@
 ﻿using Medicaly.Application.Communs;
 using Medicaly.Application.Entensions;
+using Medicaly.Application.Procedimentos.Dtos;
 using Medicaly.Application.Transients;
 using Medicaly.Domain.Agendamentos;
 using Medicaly.Domain.Agendamentos.Dtos;
@@ -12,7 +13,7 @@ namespace Medicaly.Application.Procedimentos;
 public interface IProcedimentoService
 {
     public Task<ProcedimentoOutput?> Get(Guid procedimentoId);
-    public Task<PagedResult<ProcedimentoOutput>> GetList(PagedFilteredInput input);
+    public Task<PagedResult<ProcedimentoOutput>> GetList(GetListProcedimentoInput input);
     public Task<Guid?> Create(ProcedimentoInput input);
     public Task<bool> Update(Guid procedimentoId, ProcedimentoInput input);
     public Task<bool> Delete(Guid procedimentoId);
@@ -38,11 +39,29 @@ public class ProcedimentoService: IProcedimentoService, IAutoTransient
         return procedimento != null ? new ProcedimentoOutput(procedimento) : null;
     }
 
-    public async Task<PagedResult<ProcedimentoOutput>> GetList(PagedFilteredInput input)
+    public async Task<PagedResult<ProcedimentoOutput>> GetList(GetListProcedimentoInput input)
     {
         var query = _procedimento
             .AsNoTracking()
-            .Select(procedimento => new ProcedimentoOutput(procedimento));
+            .WhereIf(input.ProfissionalId.HasValue, a => input.ProfissionalId.Value==a.IdProfissional)
+            .WhereIf(input.PacienteId.HasValue, a => input.PacienteId.Value == a.IdPaciente)
+            .Include(procedimento => procedimento.Paciente)
+            .Include(procedimento => procedimento.Profissional)
+            .Include(procedimento => procedimento.UnidadeAtendimento)
+            .Select(procedimento => new ProcedimentoOutput(procedimento)
+                 {
+                    Id = procedimento.Id,
+                    TipoProcedimento = procedimento.TipoProcedimento,
+                    CodigoTuss = procedimento.CodigoTuss,
+                    Status = procedimento.Status,
+                    Data = procedimento.Data,
+                    IdPaciente = procedimento.IdPaciente,
+                    IdProfissional = procedimento.IdProfissional,
+                    IdUnidadeAtendimento = procedimento.IdUnidadeAtendimento,
+                    Profissional = procedimento.Profissional,
+                    Paciente = procedimento.Paciente,
+                    UnidadeAtendimento = procedimento.UnidadeAtendimento
+                });
 
         return await query.ToPagedResult(input);
     }
