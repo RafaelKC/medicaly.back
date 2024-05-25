@@ -13,7 +13,6 @@ public class PacienteInput: EntityDto, IUser
     [Required]
     public string Sobrenome { get; set; }
     
-    public string NomeDoCachorro { get; set; }
 
     [MaxLength(11)]
     [MinLength(11)]

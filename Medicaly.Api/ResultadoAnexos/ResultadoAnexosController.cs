@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Medicaly.Api.ResultadoAnexos;
 
 [Route("resultadoAnexo")]
-public class ResultadoAnexosController
+public class ResultadoAnexosController: ControllerBase
 {
     private readonly IResultadoAnexoService _resultadoAnexo;
 

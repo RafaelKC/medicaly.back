@@ -34,7 +34,7 @@ public class ResultadoAnexoService : IResultadoAnexoService, IAutoTransient
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message);
+            Console.WriteLine(e.Message);
             return null;
         }
     }

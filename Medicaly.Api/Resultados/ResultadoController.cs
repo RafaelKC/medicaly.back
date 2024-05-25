@@ -24,9 +24,9 @@ public class ResultadoController : ControllerBase
         return await _resultado.GetList(input);
     }
 
-    [HttpGet("{resultadoId: Guid}")]
+    [HttpGet("{ResultadoId:guid}")]
 
-    public async Task<ResultadoOutput> Get(Guid resultadoId)
+    public async Task<ResultadoOutput> Get([FromRoute]Guid resultadoId)
     {
         return await _resultado.Get(resultadoId);
     }
@@ -38,14 +38,14 @@ public class ResultadoController : ControllerBase
         return resultadoId.HasValue ? Created($"resultados/{resultadoId.Value}", null) : UnprocessableEntity();
     } 
     
-    [HttpPut("{resultadoId:guid}")]
+    [HttpPut("{ResultadoId:guid}")]
     public async Task<ActionResult> Update([FromRoute] Guid resultadoId, [FromBody] ResultadoInput input)
     {
         var atuaizado = await _resultado.Update(resultadoId, input);
         return atuaizado ? Ok() : NotFound();
     }
 
-    [HttpDelete("{resultadoId:guid}")]
+    [HttpDelete("{ResultadoId:guid}")]
     public async Task<ActionResult> Delete([FromRoute] Guid resultadoId)
     {
         var deletado = await _resultado.Delete(resultadoId);
