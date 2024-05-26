@@ -28,4 +28,20 @@
       <PackageReference Include="supabase-csharp" Version="0.15.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="ResultadoAnexos\Dtos\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="ResultadoAnexos\Dtos\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="ResultadoAnexos\Dtos\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="ResultadoAnexos\Dtos\**" />
+    </ItemGroup>
+
 </Project>
