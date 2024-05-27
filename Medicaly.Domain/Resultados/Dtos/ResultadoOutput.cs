@@ -9,7 +9,7 @@ public class ResultadoOutput
     public Guid ProcedimentoId { get; set; }
     public String Observacoes { get; set; }
     
-    public AnexoOutput Anexo { get; set; }
+    public Guid AnexoId { get; set; }
     
     
 }

@@ -25,8 +25,7 @@ public class ResultadoController : ControllerBase
     }
 
     [HttpGet("{resultadoId:guid}")]
-
-    public async Task<ResultadoOutput> Get(Guid resultadoId)
+    public async Task<ResultadoOutput> Get([FromRoute]Guid resultadoId)
     {
         return await _resultado.Get(resultadoId);
     }

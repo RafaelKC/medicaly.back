@@ -40,11 +40,11 @@ public class ResultadoService : IResultadoService, IAutoTransient
     {
         var resultado = await _resultado.AsNoTracking()
                 .Include(a => a.ResultadoAnexo)
-                .ThenInclude(a => a.Anexo)
+                
                 .Select(resultado => new ResultadoOutput()
                 {
                     ProcedimentoId = resultado.ProcedimentoId,
-                    Anexo = new AnexoOutput(resultado.ResultadoAnexo.Anexo),
+                    AnexoId = resultado.ResultadoAnexo.AnexoId,
                     Observacoes = resultado.Observacoes
             
                 })
@@ -60,7 +60,7 @@ public class ResultadoService : IResultadoService, IAutoTransient
             .Select(resultado => new ResultadoOutput()
         {
             ProcedimentoId = resultado.ProcedimentoId,
-            Anexo = new AnexoOutput(resultado.ResultadoAnexo.Anexo),
+            AnexoId = resultado.ResultadoAnexo.AnexoId,
             Observacoes = resultado.Observacoes
             
         });
