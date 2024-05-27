@@ -39,32 +39,16 @@ public class ResultadoService : IResultadoService, IAutoTransient
     public async Task<ResultadoOutput?> Get(Guid resultadoId)
     {
         var resultado = await _resultado.AsNoTracking()
-                .Include(a => a.ResultadoAnexo)
-                
-                .Select(resultado => new ResultadoOutput()
-                {
-                    ProcedimentoId = resultado.ProcedimentoId,
-                    AnexoId = resultado.ResultadoAnexo.AnexoId,
-                    Observacoes = resultado.Observacoes
-            
-                })
                 .FirstOrDefaultAsync(resultado => resultado.ProcedimentoId == resultadoId);
-        return resultado;
+
+        return resultado != null ? new ResultadoOutput(resultado) : null;
     }
 
     public async Task<PagedResult<ResultadoOutput>> GetList(GetListResultadoInput input)
     {
         var query = _resultado.AsNoTracking()
             .WhereIf(input.ProcedimentoId.HasValue, a => input.ProcedimentoId.Value==a.ProcedimentoId)
-            .Include(a => a.ResultadoAnexo)
-            .ThenInclude(a => a.Anexo)
-            .Select(resultado => new ResultadoOutput()
-        {
-            ProcedimentoId = resultado.ProcedimentoId,
-            AnexoId = resultado.ResultadoAnexo.AnexoId,
-            Observacoes = resultado.Observacoes
-            
-        });
+            .Select(resultado => new ResultadoOutput(resultado));
         return await query.ToPagedResult(input);
     }
 

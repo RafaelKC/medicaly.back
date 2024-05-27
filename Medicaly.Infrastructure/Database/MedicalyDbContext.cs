@@ -159,6 +159,10 @@ public class MedicalyDbContext: DbContext
         modelBuilder.Entity<Resultado>(ResultadoModel =>
         {
             ResultadoModel.HasKey(a => a.ProcedimentoId);
+            ResultadoModel.HasOne<Procedimento>()
+                .WithOne()
+                .HasPrincipalKey<Procedimento>(a => a.Id)
+                .HasForeignKey<Resultado>(a => a.ProcedimentoId);
         });
 
         modelBuilder.Entity<ResultadoAnexo>(ResultadoAnexoModel =>

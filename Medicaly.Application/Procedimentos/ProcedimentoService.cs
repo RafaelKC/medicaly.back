@@ -79,6 +79,8 @@ public class ProcedimentoService: IProcedimentoService, IAutoTransient
         var profissionalAtendeNesseHorario = profissional != null && profissional.InicioExpediente <= horarioAtendimento &&
                                              profissional.FimExpediente >= finalAtendimento && profissional.DiasAtendidos.Contains(input.Data.DayOfWeek);
 
+        var dataValida = input.Data > DateTime.Now;
+
         var inicioConflitoAtendimento = input.Data;
         inicioConflitoAtendimento = inicioConflitoAtendimento.AddHours(-1);
         var finalConflitoAtendimento = input.Data;
@@ -86,11 +88,11 @@ public class ProcedimentoService: IProcedimentoService, IAutoTransient
 
         var temConflito = await _procedimento.AsNoTracking()
             .Where(p => p.IdProfissional == input.IdProfissional)
-            .Where(p => p.Status == Status.Ativo)
+            .Where(p => p.Status == Status.Ativo || p.Status == Status.EmAndamento)
             .AnyAsync(p => inicioConflitoAtendimento < p.Data && p.Data < finalConflitoAtendimento);
 
 
-        if (temConflito || !profissionalAtendeNesseHorario)
+        if (temConflito || !profissionalAtendeNesseHorario || !dataValida)
         {
             return null;
         }

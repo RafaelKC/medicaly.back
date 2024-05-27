@@ -6,11 +6,13 @@ namespace Medicaly.Domain.Resultados.Dtos;
 
 public class ResultadoOutput
 {
+    public ResultadoOutput(Resultado resultado)
+    {
+        ProcedimentoId = resultado.ProcedimentoId;
+        Observacoes = resultado.Observacoes;
+    }
+
     public Guid ProcedimentoId { get; set; }
     public String Observacoes { get; set; }
-    
-    public Guid AnexoId { get; set; }
-    
-    
 }
 
