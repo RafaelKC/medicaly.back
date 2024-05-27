@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
-using Medicaly.Domain.Agendamento.Enums;
 using Medicaly.Domain.Communs;
+using Medicaly.Domain.Procedimentos.Enums;
 
-namespace Medicaly.Domain.Agendamentos.Dtos;
+namespace Medicaly.Domain.Procedimentos.Dtos;
 
 public class ProcedimentoInput: EntityDto
 {

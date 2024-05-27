@@ -2,10 +2,9 @@
 using Medicaly.Application.Entensions;
 using Medicaly.Application.Procedimentos.Dtos;
 using Medicaly.Application.Transients;
-using Medicaly.Domain.Agendamento.Enums;
-using Medicaly.Domain.Agendamentos;
-using Medicaly.Domain.Agendamentos.Dtos;
+using Medicaly.Domain.Procedimentos;
 using Medicaly.Domain.Procedimentos.Dtos;
+using Medicaly.Domain.Procedimentos.Enums;
 using Medicaly.Domain.Profissionais;
 using Medicaly.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;

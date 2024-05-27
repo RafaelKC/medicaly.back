@@ -1,4 +1,3 @@
-using Medicaly.Domain.Agendamentos;
 using Medicaly.Domain.Anexos;
 using Medicaly.Domain.ResultadoAnexos.Dtos;
 using Medicaly.Domain.Resultados;
@@ -22,8 +21,6 @@ public class ResultadoAnexo
 
     public ResultadoAnexo(ResultadoAnexoInput input)
     {
-        Resultado = input.Resultado;
-        Anexo = input.Anexo;
         AnexoId = input.AnexoId;
         ProcedimentoId = input.ProcedimentoId;
     }

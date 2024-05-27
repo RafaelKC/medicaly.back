@@ -75,7 +75,7 @@ namespace Medicaly.Infrastructure.Migrations
                     b.ToTable("Administradores", "public");
                 });
 
-            modelBuilder.Entity("Medicaly.Domain.Agendamentos.Procedimento", b =>
+            modelBuilder.Entity("Medicaly.Domain.Procedimentos", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -429,7 +429,7 @@ namespace Medicaly.Infrastructure.Migrations
                         .HasForeignKey("EnderecoId");
                 });
 
-            modelBuilder.Entity("Medicaly.Domain.Agendamentos.Procedimento", b =>
+            modelBuilder.Entity("Medicaly.Domain.Procedimentos", b =>
                 {
                     b.HasOne("Medicaly.Domain.Pacientes.Paciente", "Paciente")
                         .WithMany()

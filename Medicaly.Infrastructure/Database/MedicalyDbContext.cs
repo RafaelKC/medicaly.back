@@ -1,5 +1,4 @@
 ﻿using Medicaly.Domain.Administradores;
-using Medicaly.Domain.Agendamentos;
 using Medicaly.Domain.Anexos;
 using Medicaly.Domain.Procedimentos;
 using Medicaly.Domain.Enderecos;

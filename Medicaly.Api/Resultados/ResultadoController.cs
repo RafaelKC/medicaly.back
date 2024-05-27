@@ -1,5 +1,7 @@
 using Medicaly.Application.Communs;
+using Medicaly.Application.Procedimentos.Dtos;
 using Medicaly.Application.Resultados;
+using Medicaly.Application.Resultados.Dtos;
 using Medicaly.Domain.Resultados.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +21,7 @@ public class ResultadoController : ControllerBase
 
     [HttpGet]
 
-    public async Task<PagedResult<ResultadoOutput>> GetList([FromQuery] PagedFilteredInput input)
+    public async Task<PagedResult<ResultadoOutput>> GetList([FromQuery] GetListResultadoInput input)
     {
         return await _resultado.GetList(input);
     }

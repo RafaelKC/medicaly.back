@@ -1,9 +1,7 @@
-using System.ComponentModel.DataAnnotations;
-using Medicaly.Domain.Agendamento.Enums;
-using Medicaly.Domain.Agendamentos;
 using Medicaly.Domain.Communs;
-using Medicaly.Domain.Profissionais;
 using Medicaly.Domain.Pacientes;
+using Medicaly.Domain.Procedimentos.Enums;
+using Medicaly.Domain.Profissionais;
 using Medicaly.Domain.UnidadesAtendimentos;
 
 
@@ -14,10 +12,9 @@ public class ProcedimentoOutput : EntityDto
     public TipoProcedimento TipoProcedimento { get; set; }
     public Status Status { get; set; }
     public string CodigoTuss { get; set; }
-    public DateTime Data { get; set; }
-    
     public Paciente Paciente { get; set; }
     public Profissional Profissional { get; set; }
+    public DateTime Data { get; set; }
     
     public UnidadeAtendimento UnidadeAtendimento { get; set; }
     public Guid IdPaciente { get; set; }
@@ -25,6 +22,10 @@ public class ProcedimentoOutput : EntityDto
     public Guid IdProfissional { get; set; }
     public Guid IdUnidadeAtendimento { get; set; }
 
+    public ProcedimentoOutput()
+    {
+
+    }
 
     public ProcedimentoOutput(Procedimento input)
     {
