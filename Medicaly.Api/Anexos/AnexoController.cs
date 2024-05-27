@@ -2,13 +2,11 @@
 using Medicaly.Application.Anexos.Dtos;
 using Medicaly.Application.Communs;
 using Medicaly.Domain.Anexos.Dtos;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medicaly.Api.Anexos;
 
 [Route("anexos")]
-[Authorize]
 public class AnexoController: ControllerBase
 {
     private readonly IAnexoService _anexoService;

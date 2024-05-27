@@ -1,13 +1,12 @@
 using System.ComponentModel.DataAnnotations;
-using Medicaly.Domain.Agendamento.Enums;
-using Medicaly.Domain.Agendamentos.Dtos;
 using Medicaly.Domain.Communs;
 using Medicaly.Domain.Pacientes;
+using Medicaly.Domain.Procedimentos.Dtos;
+using Medicaly.Domain.Procedimentos.Enums;
 using Medicaly.Domain.Profissionais;
-using Medicaly.Domain.ResultadoAnexos;
 using Medicaly.Domain.UnidadesAtendimentos;
 
-namespace Medicaly.Domain.Agendamentos;
+namespace Medicaly.Domain.Procedimentos;
 
 public class Procedimento: Entity {
     public TipoProcedimento TipoProcedimento { get; set; }

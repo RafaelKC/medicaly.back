@@ -1,7 +1,6 @@
-using Medicaly.Domain.Agendamento.Enums;
-using Medicaly.Domain.Agendamentos;
 using Medicaly.Domain.Communs;
 using Medicaly.Domain.Pacientes;
+using Medicaly.Domain.Procedimentos.Enums;
 using Medicaly.Domain.Profissionais;
 using Medicaly.Domain.UnidadesAtendimentos;
 

@@ -1,4 +1,4 @@
-namespace Medicaly.Domain.Agendamento.Enums;
+namespace Medicaly.Domain.Procedimentos.Enums;
 
 public enum TipoProcedimento
 {

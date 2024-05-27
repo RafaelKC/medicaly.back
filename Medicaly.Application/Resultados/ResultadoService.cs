@@ -1,8 +1,8 @@
 using Medicaly.Application.Communs;
 using Medicaly.Application.Entensions;
+using Medicaly.Application.Procedimentos.Dtos;
 using Medicaly.Application.Resultados.Dtos;
 using Medicaly.Application.Transients;
-using Medicaly.Domain.Agendamentos.Dtos;
 using Medicaly.Domain.Anexos.Dtos;
 using Medicaly.Domain.Resultados;
 using Medicaly.Domain.Resultados.Dtos;
@@ -13,7 +13,7 @@ namespace Medicaly.Application.Resultados;
 public interface IResultadoService
 {
     public Task<ResultadoOutput> Get(Guid resultadoId);
-    public Task<PagedResult<ResultadoOutput>> GetList(PagedFilteredInput input);
+    public Task<PagedResult<ResultadoOutput>> GetList(GetListResultadoInput input);
     public Task<Guid?> Create(ResultadoInput input);
     public Task<bool> Update(Guid resultadoId, ResultadoInput input);
     public Task<bool> Delete(Guid resultadoId);
@@ -52,9 +52,10 @@ public class ResultadoService : IResultadoService, IAutoTransient
         return resultado;
     }
 
-    public async Task<PagedResult<ResultadoOutput>> GetList(PagedFilteredInput input)
+    public async Task<PagedResult<ResultadoOutput>> GetList(GetListResultadoInput input)
     {
         var query = _resultado.AsNoTracking()
+            .WhereIf(input.ProcedimentoId.HasValue, a => input.ProcedimentoId.Value==a.ProcedimentoId)
             .Include(a => a.ResultadoAnexo)
             .ThenInclude(a => a.Anexo)
             .Select(resultado => new ResultadoOutput()

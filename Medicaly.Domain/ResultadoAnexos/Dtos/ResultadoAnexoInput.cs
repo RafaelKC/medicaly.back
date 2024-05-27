@@ -7,7 +7,4 @@ public class ResultadoAnexoInput
 {
     public Guid ProcedimentoId { get; set; }
     public Guid AnexoId { get; set; }
-    
-    public Resultado Resultado { get; set; }
-    public Anexo Anexo { get; set; }
 }

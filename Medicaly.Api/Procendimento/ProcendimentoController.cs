@@ -2,7 +2,6 @@
 using Medicaly.Application.Procedimentos;
 using Medicaly.Application.Procedimentos.Dtos;
 using Medicaly.Application.UnidadesAtendimento;
-using Medicaly.Domain.Agendamentos.Dtos;
 using Medicaly.Domain.Procedimentos.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
