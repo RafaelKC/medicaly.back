@@ -3,12 +3,13 @@ using Medicaly.Application.Procedimentos.Dtos;
 using Medicaly.Application.Resultados;
 using Medicaly.Application.Resultados.Dtos;
 using Medicaly.Domain.Resultados.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medicaly.Api.Resultados;
 
 [Route("resultados")]
-
+[Authorize]
 public class ResultadoController : ControllerBase
 {
     private readonly IResultadoService _resultado;

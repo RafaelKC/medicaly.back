@@ -160,21 +160,27 @@ public class MedicalyDbContext: DbContext
         {
             ResultadoModel.HasKey(a => a.ProcedimentoId);
             ResultadoModel.HasOne<Procedimento>()
-                .WithOne()
+                .WithOne(p => p.Resultado)
                 .HasPrincipalKey<Procedimento>(a => a.Id)
                 .HasForeignKey<Resultado>(a => a.ProcedimentoId);
+
+            ResultadoModel
+                .HasMany(e => e.Anexos)
+                .WithMany(e => e.Resultados)
+                .UsingEntity<ResultadoAnexo>(
+                    l => l
+                        .HasOne(e => e.Anexo)
+                        .WithMany(e => e.ResultadosAnexos)
+                        .HasForeignKey(e => e.AnexoId),
+                    r => r
+                        .HasOne(e => e.Resultado)
+                        .WithMany(e => e.ResultadosAnexos)
+                        .HasForeignKey(e => e.ProcedimentoId));
         });
 
         modelBuilder.Entity<ResultadoAnexo>(ResultadoAnexoModel =>
         {
             ResultadoAnexoModel.HasKey(a => new { a.AnexoId, a.ProcedimentoId });
-            ResultadoAnexoModel.HasOne(a => a.Anexo)
-                .WithOne(a => a.ResultadoAnexos).HasPrincipalKey<Anexo>(a => a.Id)
-                .HasForeignKey<ResultadoAnexo>(a => a.AnexoId);
-            ResultadoAnexoModel.HasOne(a => a.Resultado)
-                .WithOne(a => a.ResultadoAnexo).HasPrincipalKey<Resultado>(a => a.ProcedimentoId)
-                .HasForeignKey<ResultadoAnexo>(a => a.ProcedimentoId);
-
         });
     }
     

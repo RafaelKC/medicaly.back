@@ -387,11 +387,7 @@ namespace Medicaly.Infrastructure.Migrations
 
                     b.HasKey("AnexoId", "ProcedimentoId");
 
-                    b.HasIndex("AnexoId")
-                        .IsUnique();
-
-                    b.HasIndex("ProcedimentoId")
-                        .IsUnique();
+                    b.HasIndex("ProcedimentoId");
 
                     b.ToTable("ResultadoAnexos", "public");
                 });
@@ -535,14 +531,14 @@ namespace Medicaly.Infrastructure.Migrations
             modelBuilder.Entity("Medicaly.Domain.ResultadoAnexos.ResultadoAnexo", b =>
                 {
                     b.HasOne("Medicaly.Domain.Anexos.Anexo", "Anexo")
-                        .WithOne("ResultadoAnexos")
-                        .HasForeignKey("Medicaly.Domain.ResultadoAnexos.ResultadoAnexo", "AnexoId")
+                        .WithMany("ResultadosAnexos")
+                        .HasForeignKey("AnexoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Medicaly.Domain.Resultados.Resultado", "Resultado")
-                        .WithOne("ResultadoAnexo")
-                        .HasForeignKey("Medicaly.Domain.ResultadoAnexos.ResultadoAnexo", "ProcedimentoId")
+                        .WithMany("ResultadosAnexos")
+                        .HasForeignKey("ProcedimentoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -573,8 +569,7 @@ namespace Medicaly.Infrastructure.Migrations
 
             modelBuilder.Entity("Medicaly.Domain.Anexos.Anexo", b =>
                 {
-                    b.Navigation("ResultadoAnexos")
-                        .IsRequired();
+                    b.Navigation("ResultadosAnexos");
                 });
 
             modelBuilder.Entity("Medicaly.Domain.Especialidades.Especialidade", b =>
@@ -593,8 +588,7 @@ namespace Medicaly.Infrastructure.Migrations
 
             modelBuilder.Entity("Medicaly.Domain.Resultados.Resultado", b =>
                 {
-                    b.Navigation("ResultadoAnexo")
-                        .IsRequired();
+                    b.Navigation("ResultadosAnexos");
                 });
 #pragma warning restore 612, 618
         }

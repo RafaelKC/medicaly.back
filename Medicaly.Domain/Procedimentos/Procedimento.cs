@@ -4,6 +4,7 @@ using Medicaly.Domain.Pacientes;
 using Medicaly.Domain.Procedimentos.Dtos;
 using Medicaly.Domain.Procedimentos.Enums;
 using Medicaly.Domain.Profissionais;
+using Medicaly.Domain.Resultados;
 using Medicaly.Domain.UnidadesAtendimentos;
 
 namespace Medicaly.Domain.Procedimentos;
@@ -34,7 +35,9 @@ public class Procedimento: Entity {
     public Guid IdUnidadeAtendimento { get; set; }
 
     public UnidadeAtendimento UnidadeAtendimento { get; set; }
-    
+
+    public Resultado? Resultado { get; set; }
+
 
 
     public Procedimento() {

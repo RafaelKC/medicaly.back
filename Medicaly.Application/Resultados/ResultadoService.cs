@@ -47,8 +47,14 @@ public class ResultadoService : IResultadoService, IAutoTransient
     public async Task<PagedResult<ResultadoOutput>> GetList(GetListResultadoInput input)
     {
         var query = _resultado.AsNoTracking()
-            .WhereIf(input.ProcedimentoId.HasValue, a => input.ProcedimentoId.Value==a.ProcedimentoId)
-            .Select(resultado => new ResultadoOutput(resultado));
+            .Include(a => a.Anexos)
+            .WhereIf(input.ProcedimentoId.HasValue, a => input.ProcedimentoId.Value == a.ProcedimentoId)
+            .Select(resultado => new ResultadoOutput
+            {
+                ProcedimentoId = resultado.ProcedimentoId,
+                Observacoes = resultado.Observacoes,
+                TemAnexo = resultado.Anexos.Count > 0
+            });
         return await query.ToPagedResult(input);
     }
 

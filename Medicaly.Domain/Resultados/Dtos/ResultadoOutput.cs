@@ -12,7 +12,13 @@ public class ResultadoOutput
         Observacoes = resultado.Observacoes;
     }
 
+    public ResultadoOutput()
+    {
+
+    }
+
     public Guid ProcedimentoId { get; set; }
     public String Observacoes { get; set; }
+    public bool TemAnexo { get; set; }
 }
 

@@ -3,12 +3,14 @@ using Medicaly.Application.Procedimentos;
 using Medicaly.Application.Procedimentos.Dtos;
 using Medicaly.Application.UnidadesAtendimento;
 using Medicaly.Domain.Procedimentos.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medicaly.Api.Procendimento;
 
 
 [Route("procedimentos")]
+[Authorize]
 public class ProcedimentoController: ControllerBase
 {
     private readonly IProcedimentoService _procedimento;

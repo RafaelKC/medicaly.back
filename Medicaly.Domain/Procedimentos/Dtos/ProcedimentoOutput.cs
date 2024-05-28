@@ -2,6 +2,8 @@ using Medicaly.Domain.Communs;
 using Medicaly.Domain.Pacientes;
 using Medicaly.Domain.Procedimentos.Enums;
 using Medicaly.Domain.Profissionais;
+using Medicaly.Domain.Resultados;
+using Medicaly.Domain.Resultados.Dtos;
 using Medicaly.Domain.UnidadesAtendimentos;
 
 
@@ -21,6 +23,8 @@ public class ProcedimentoOutput : EntityDto
     
     public Guid IdProfissional { get; set; }
     public Guid IdUnidadeAtendimento { get; set; }
+
+    public ResultadoOutput? Resultado { get; set; }
 
     public ProcedimentoOutput()
     {

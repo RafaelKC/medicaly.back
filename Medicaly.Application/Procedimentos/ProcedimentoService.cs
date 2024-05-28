@@ -6,6 +6,7 @@ using Medicaly.Domain.Procedimentos;
 using Medicaly.Domain.Procedimentos.Dtos;
 using Medicaly.Domain.Procedimentos.Enums;
 using Medicaly.Domain.Profissionais;
+using Medicaly.Domain.Resultados.Dtos;
 using Medicaly.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
@@ -45,27 +46,39 @@ public class ProcedimentoService: IProcedimentoService, IAutoTransient
     {
         var query = _procedimento
             .AsNoTracking()
-            .WhereIf(input.ProfissionalId.HasValue, a => input.ProfissionalId.Value==a.IdProfissional)
+            .WhereIf(input.ProfissionalId.HasValue, a => input.ProfissionalId.Value == a.IdProfissional)
             .WhereIf(input.PacienteId.HasValue, a => input.PacienteId.Value == a.IdPaciente)
             .Include(procedimento => procedimento.Paciente)
             .Include(procedimento => procedimento.Profissional)
             .Include(procedimento => procedimento.UnidadeAtendimento)
-            .Select(procedimento => new ProcedimentoOutput(procedimento)
-                 {
-                    Id = procedimento.Id,
-                    TipoProcedimento = procedimento.TipoProcedimento,
-                    CodigoTuss = procedimento.CodigoTuss,
-                    Status = procedimento.Status,
-                    Data = procedimento.Data,
-                    IdPaciente = procedimento.IdPaciente,
-                    IdProfissional = procedimento.IdProfissional,
-                    IdUnidadeAtendimento = procedimento.IdUnidadeAtendimento,
-                    Profissional = procedimento.Profissional,
-                    Paciente = procedimento.Paciente,
-                    UnidadeAtendimento = procedimento.UnidadeAtendimento
-                });
+            .Include(procedimento => procedimento.Resultado)
+            .ThenInclude(resultado => resultado.Anexos);
 
-        return await query.ToPagedResult(input);
+        var result = await query.ToPagedResult(input);
+        return new PagedResult<ProcedimentoOutput>
+        {
+            TotalCount = result.TotalCount,
+            Items = result.Items.Select(procedimento => new ProcedimentoOutput(procedimento)
+            {
+                Id = procedimento.Id,
+                TipoProcedimento = procedimento.TipoProcedimento,
+                CodigoTuss = procedimento.CodigoTuss,
+                Status = procedimento.Status,
+                Data = procedimento.Data,
+                IdPaciente = procedimento.IdPaciente,
+                IdProfissional = procedimento.IdProfissional,
+                IdUnidadeAtendimento = procedimento.IdUnidadeAtendimento,
+                Profissional = procedimento.Profissional,
+                Paciente = procedimento.Paciente,
+                UnidadeAtendimento = procedimento.UnidadeAtendimento,
+                Resultado = procedimento.Resultado == null ? null : new ResultadoOutput
+                {
+                    ProcedimentoId = procedimento.Resultado.ProcedimentoId,
+                    Observacoes = procedimento.Resultado.Observacoes,
+                    TemAnexo = procedimento.Resultado.Anexos != null && procedimento.Resultado.Anexos.Any()
+                }
+            }).ToList()
+        };
     }
 
     public async Task<Guid?> Create(ProcedimentoInput input)
