@@ -90,7 +90,7 @@ public class ProcedimentoService: IProcedimentoService, IAutoTransient
 
         var profissional = await _profissionais.AsNoTracking().FirstOrDefaultAsync(p => p.Id == input.IdProfissional);
         var profissionalAtendeNesseHorario = profissional != null && profissional.InicioExpediente <= horarioAtendimento &&
-                                             profissional.FimExpediente >= finalAtendimento && profissional.DiasAtendidos.Contains(input.Data.DayOfWeek);
+                                             profissional.FimExpediente >= finalAtendimento &&  (profissional.DiasAtendidos == null || profissional.DiasAtendidos.Contains(input.Data.DayOfWeek));
 
         var dataValida = input.Data > DateTime.Now;
 

@@ -38,6 +38,7 @@ public class ProcedimentoServiceTests: BaseTestWithDbContext
     [Fact]
     public async Task TestCreate()
     {
+        // Arrange
         var endereco = new Endereco
         {
             Id = Guid.NewGuid(),
@@ -63,8 +64,8 @@ public class ProcedimentoServiceTests: BaseTestWithDbContext
             Id = Guid.NewGuid(),
             EnderecoId = endereco.Id,
             UnidadeId = unidade.Id,
-            FimExpediente = TimeSpan.FromMinutes(1),
-            InicioExpediente = TimeSpan.FromMinutes(1),
+            FimExpediente = TimeSpan.FromHours(24),
+            InicioExpediente = TimeSpan.FromHours(0),
             Tipo = TipoProfissional.Enfermeiro,
             CredencialDeSaude = "CredencialDeSaude",
             Genero = Genero.Feminino,
@@ -102,11 +103,15 @@ public class ProcedimentoServiceTests: BaseTestWithDbContext
             IdProfissional = profissional.Id,
             IdPaciente = paciente.Id,
             IdUnidadeAtendimento = unidade.Id,
-            Data = DateTime.Now
+            Data = DateTime.Now.AddDays(1),
+            CodigoTuss = "dsa",
+            Status = Status.Ativo
         };
         
+        // Act
         var result = await _service.Create(input);
         
+        // Assert
         Assert.NotNull(result);
     }
 
