@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Medicaly.Application.UnidadesAtendimento;
 using Medicaly.Domain.Enderecos;
 using Medicaly.Domain.UnidadesAtendimentos;
+using Medicaly.Domain.UnidadesAtendimentos.Dtos;
 using Medicaly.Domain.UnidadesAtendimentos.Enums;
 using Medicaly.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
@@ -81,5 +82,41 @@ public class UnidadeAtendimentoServiceTests: BaseTestWithDbContext
         Assert.Equal(0, await DbContext.UnidadeAtendimentos.CountAsync());
     }
 
-    
+    [Fact]
+    public async Task CreateUnidade()
+    {
+        // Arrange
+        var endereco = new Endereco
+        {
+            Id = Guid.NewGuid(),
+            Cep = "12345678",
+            Estado = "PR",
+            Bairro = "Bairro",
+            Cidade = "Cidade",
+            CodigoIbgeCidade = "IbgeCidade",
+            Complemento = "Complemento",
+            Logradouro = "Logradouro",
+            Numero = 0,
+            Observacao = "Observacao",
+        };
+        DbContext.Enderecos.Add(endereco);
+        await DbContext.SaveChangesAsync();
+        DbContext.ChangeTracker.Clear();
+        
+        var unidade = new UnidadeAtendimentoInput
+        {
+            Id = Guid.NewGuid(),
+            Nome = "Unidade Atendimento",
+            TipoUnidade = TipoUnidade.Clinica,
+            EnderecoId = endereco.Id,
+        };
+        
+
+        // Act
+        var result = await _service.Create(unidade);
+        
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(1, await DbContext.UnidadeAtendimentos.CountAsync());
+    }
 }
